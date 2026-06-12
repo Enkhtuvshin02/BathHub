@@ -1,26 +1,57 @@
 @import "tailwindcss";
 
+/*
+ * Design tokens reverse-engineered from the live 100ail.mn site
+ * (verified via Playwright computed styles + CSS bundle inspection).
+ */
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #18181b;
+
+  /* BathMall ocean-blue brand — used on top bar, logo, primary buttons */
+  --brand: #0e7fd1;
+  --brand-hover: #0b66a8;
+  --brand-foreground: #ffffff;
+
+  --muted: #f4f4f5;
+  --muted-foreground: #6a7282;
+  --border: #e5e7eb;
+
+  --sale: #ed1c29;      /* discount badge */
+  --rating: #f99c00;    /* star */
+  --success: #00c758;   /* in-stock */
+
+  --radius: 0.75rem;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border-subtle: var(--border);
+  --color-sale: var(--sale);
+  --color-rating: var(--rating);
+  --color-success: var(--success);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --radius-card: var(--radius);
+  --font-sans: var(--font-inter);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+/* thin scrollbar for the category mega-menu list */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 9999px;
 }
