@@ -7,7 +7,6 @@ const legalLinks = [
   { label: "Бидний тухай", href: "/about" },
   { label: "Үйлчилгээний нөхцөл", href: "/service" },
   { label: "Хүргэлтийн нөхцөл", href: "/delivery" },
-  { label: "Холбоо барих", href: "/contact" },
 ];
 
 export function Footer() {
