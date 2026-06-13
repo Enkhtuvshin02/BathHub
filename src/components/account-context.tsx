@@ -39,8 +39,8 @@ type AccountState = {
 };
 
 const AccountContext = createContext<AccountState | null>(null);
-const USERS_KEY = "bathmall-users";
-const SESSION_KEY = "bathmall-account";
+const USERS_KEY = "bathhub-users";
+const SESSION_KEY = "bathhub-account";
 
 const strip = (u: StoredUser): User => {
   const { password: _pw, ...rest } = u;

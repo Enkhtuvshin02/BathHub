@@ -21,7 +21,7 @@ type OrdersState = {
 };
 
 const OrdersContext = createContext<OrdersState | null>(null);
-const STORAGE_KEY = "bathmall-orders";
+const STORAGE_KEY = "bathhub-orders";
 
 export function OrdersProvider({ children }: { children: ReactNode }) {
   const [orders, setOrders] = useState<Order[]>([]);

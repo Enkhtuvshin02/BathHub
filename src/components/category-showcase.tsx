@@ -3,7 +3,7 @@ import Link from "next/link";
 import { categories, products } from "@/lib/data";
 
 // A few headline categories shown as image tiles on the homepage.
-const featuredSlugs = ["unitaz", "ugaaltuur", "vann", "shurshuur", "holigch", "tavilga"];
+const featuredSlugs = ["unitaz", "ugaaltuur", "shurshuur", "bide", "combo"];
 
 export function CategoryShowcase() {
   const tiles = featuredSlugs

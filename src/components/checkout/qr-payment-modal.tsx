@@ -26,7 +26,7 @@ export function QrPaymentModal({
 
   const rows = [
     { label: "Хүлээн авах данс", value: active.account },
-    { label: "Хүлээн авагч", value: "BathMall ХХК" },
+    { label: "Хүлээн авагч", value: "BathHub ХХК" },
     { label: "Захиалгын дүн", value: formatPrice(amount) },
     { label: "Гүйлгээний утга", value: orderId },
   ];

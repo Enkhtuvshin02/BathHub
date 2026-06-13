@@ -132,7 +132,7 @@ export default function OrderDetailPage() {
         <div className="flex items-center gap-2 border-b border-border-subtle bg-muted/40 px-4 py-3">
           <Package className="size-5 text-brand" />
           <div>
-            <p className="text-sm font-semibold">BathMall хүргэлт</p>
+            <p className="text-sm font-semibold">BathHub хүргэлт</p>
             <p className="text-xs text-muted-foreground">24-48 цагийн хооронд хүргэгдэнэ.</p>
           </div>
         </div>

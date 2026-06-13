@@ -6,7 +6,7 @@ export function TopBar() {
   return (
     <div className="bg-brand text-xs text-brand-foreground">
       <div className="mx-auto flex max-w-[1280px] items-center justify-between gap-4 px-4 py-1.5">
-        <p className="truncate">BathMall.mn — таны угаалгын өрөөний дэлгүүрт тавтай морил !</p>
+        <p className="truncate">BathHub — таны угаалгын өрөөний дэлгүүрт тавтай морил !</p>
         <div className="hidden items-center gap-5 sm:flex">
           <Link href="/about" className="hover:underline">Бидний тухай</Link>
           <Link href="/contact" className="hover:underline">Тусламж</Link>
@@ -14,9 +14,9 @@ export function TopBar() {
             <Phone className="size-3.5" />
             77100100
           </a>
-          <a href="mailto:info@bathmall.mn" className="flex items-center gap-1.5 hover:underline">
+          <a href="mailto:info@bathhub.mn" className="flex items-center gap-1.5 hover:underline">
             <Mail className="size-3.5" />
-            info@bathmall.mn
+            info@bathhub.mn
           </a>
         </div>
       </div>

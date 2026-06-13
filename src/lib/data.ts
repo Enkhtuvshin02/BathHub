@@ -1,74 +1,50 @@
 import type { Category, Product } from "./types";
 
-// BathMall.mn — bathroom & sanitaryware categories (Mongolian).
+// BathHub — bathroom & sanitaryware categories (Mongolian).
 export const categories: Category[] = [
-  { slug: "unitaz", name: "Унитаз" },
+  { slug: "unitaz", name: "Суултуур" },
   { slug: "ugaaltuur", name: "Угаалтуур" },
   { slug: "bide", name: "Биде" },
-  { slug: "holigch", name: "Холигч, цорго" },
   { slug: "shurshuur", name: "Шүршүүр" },
-  { slug: "vann", name: "Ванн" },
-  { slug: "dush-cabin", name: "Душны кабин" },
-  { slug: "toli", name: "Толь" },
-  { slug: "tavilga", name: "Угаалгын өрөөний тавилга" },
-  { slug: "dagaldah", name: "Дагалдах хэрэгсэл" },
-  { slug: "radiator", name: "Халаагч радиатор" },
+  { slug: "combo", name: "Иж бүрдэл" },
 ];
 
-// Public images from the Unsplash CDN (free-licensed, hotlink-friendly).
-const img = (id: string) =>
-  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=600&q=80`;
+const img = (name: string) => `/products/${name}`;
 
-// Products — bathroom/sanitaryware catalog with realistic Mongolian names + ₮ prices.
 export const products: Product[] = [
-  // Унитаз
-  { id: "bm-1001", name: "Хана дүүжин унитаз softclose суултуртай", price: 450000, oldPrice: 520000, image: img("1569597967185-cd6120712154"), categorySlug: "unitaz", rating: 0, stock: 40, unit: "1ш", isFeatured: true },
-  { id: "bm-1002", name: "Шалны унитаз бачокны хамт", price: 320000, image: img("1617400549598-84806b847c1a"), categorySlug: "unitaz", rating: 0, stock: 65, unit: "1ш", isNew: true },
-  { id: "bm-1003", name: "Компакт унитаз цагаан керамик", price: 280000, image: img("1660199581040-72f23500098e"), categorySlug: "unitaz", rating: 0, stock: 80, unit: "1ш" },
+  // Суултуур
+  { id: "bh-1001", name: "Шалны суултуур", price: 320000, image: img("toilet1.jpg"), categorySlug: "unitaz", rating: 0, stock: 40, unit: "1ш" },
+  { id: "bh-1002", name: "Ханан суултуур", price: 450000, oldPrice: 520000, image: img("toilet2.jpeg"), categorySlug: "unitaz", rating: 0, stock: 65, unit: "1ш", isFeatured: true },
+  { id: "bh-1003", name: "Хана дүүжин суултуур", price: 580000, image: img("toilet3.jpeg"), categorySlug: "unitaz", rating: 0, stock: 30, unit: "1ш", isNew: true },
+  { id: "bh-1004", name: "Компакт суултуур", price: 280000, image: img("toilet4.jpeg"), categorySlug: "unitaz", rating: 0, stock: 55, unit: "1ш" },
 
   // Угаалтуур
-  { id: "bm-1101", name: "Гранит угаалтуур цагаан 60см", price: 165000, image: img("1605635542594-d94a74f72399"), categorySlug: "ugaaltuur", rating: 0, stock: 120, unit: "1ш", isFeatured: true },
-  { id: "bm-1102", name: "Ширээний угаалтуур дугуй хэлбэртэй", price: 98000, image: img("1780399370211-1149b7776337"), categorySlug: "ugaaltuur", rating: 0, stock: 90, unit: "1ш", isNew: true },
-  { id: "bm-1103", name: "Хос угаалтуур шкафтай 120см", price: 540000, oldPrice: 600000, image: img("1769763917830-7b9c8317329d"), categorySlug: "ugaaltuur", rating: 0, stock: 25, unit: "1ш" },
+  { id: "bh-2001", name: "Угаалтуур алтан цорготой", price: 420000, oldPrice: 480000, image: img("sink1.jpg"), categorySlug: "ugaaltuur", rating: 0, stock: 20, unit: "1ш", isFeatured: true },
+  { id: "bh-2002", name: "Угаалтуур цагаан шкафтай", price: 185000, image: img("sink2.jpg"), categorySlug: "ugaaltuur", rating: 0, stock: 45, unit: "1ш" },
+  { id: "bh-2003", name: "Хос угаалтуур модон шкафтай", price: 680000, oldPrice: 750000, image: img("sink3.jpg"), categorySlug: "ugaaltuur", rating: 0, stock: 15, unit: "1ш", isFeatured: true },
+  { id: "bh-2004", name: "Дугуй угаалтуур", price: 145000, image: img("sink4.jpg"), categorySlug: "ugaaltuur", rating: 0, stock: 60, unit: "1ш", isNew: true },
+  { id: "bh-2005", name: "Зууван угаалтуур", price: 320000, image: img("sink5.jpg"), categorySlug: "ugaaltuur", rating: 0, stock: 35, unit: "1ш" },
+  { id: "bh-2006", name: "Угаалтуур налуун модон шкафтай", price: 480000, image: img("sink6.jpg"), categorySlug: "ugaaltuur", rating: 0, stock: 18, unit: "1ш", isNew: true },
+  { id: "bh-2007", name: "Чулуун угаалтуур", price: 195000, image: img("sink7.jpg"), categorySlug: "ugaaltuur", rating: 0, stock: 40, unit: "1ш" },
+  { id: "bh-2008", name: "Тэгш өнцөгт угаалтуур", price: 120000, image: img("sink8.jpg"), categorySlug: "ugaaltuur", rating: 0, stock: 70, unit: "1ш" },
+  { id: "bh-2009", name: "Хос угаалтуур цагаан шкафтай", price: 540000, oldPrice: 600000, image: img("sink9.jpg"), categorySlug: "ugaaltuur", rating: 0, stock: 12, unit: "1ш", isFeatured: true },
+  { id: "bh-2010", name: "Угаалтуур гантиг тавцантай", price: 260000, image: img("sink10.jpg"), categorySlug: "ugaaltuur", rating: 0, stock: 30, unit: "1ш" },
+  { id: "bh-2011", name: "Угаалтуур модон тавцантай", price: 240000, image: img("sink11.jpg"), categorySlug: "ugaaltuur", rating: 0, stock: 25, unit: "1ш", isNew: true },
+  { id: "bh-2012", name: "Урт угаалтуур модон шкафтай", price: 380000, image: img("sink12.jpg"), categorySlug: "ugaaltuur", rating: 0, stock: 20, unit: "1ш" },
+  { id: "bh-2013", name: "Угаалтуур ногоон шкафтай", price: 520000, oldPrice: 580000, image: img("sink13.jpg"), categorySlug: "ugaaltuur", rating: 0, stock: 10, unit: "1ш", isNew: true },
 
   // Биде
-  { id: "bm-1201", name: "Электрон биде халуун усны функцтэй", price: 890000, image: img("1581309637759-ee82f7b94b2d"), categorySlug: "bide", rating: 0, stock: 15, unit: "1ш", isFeatured: true, isNew: true },
-  { id: "bm-1202", name: "Хана дүүжин биде керамик", price: 240000, image: img("1518618750560-8f07abde4e4e"), categorySlug: "bide", rating: 0, stock: 35, unit: "1ш" },
-
-  // Холигч, цорго
-  { id: "bm-1301", name: "Угаалтуурын холигч хром", price: 75000, image: img("1562069028-92f10e37ac9d"), categorySlug: "holigch", rating: 0, stock: 200, unit: "1ш", isFeatured: true },
-  { id: "bm-1302", name: "Гал тогооны холигч өндөр цорготой", price: 120000, image: img("1669920282671-e2f03e99513f"), categorySlug: "holigch", rating: 0, stock: 140, unit: "1ш", isNew: true },
-  { id: "bm-1303", name: "Ваннны холигч шүршүүртэй", price: 145000, oldPrice: 165000, image: img("1593523474914-2a4fd54075dc"), categorySlug: "holigch", rating: 0, stock: 110, unit: "1ш" },
+  { id: "bh-3001", name: "Электрон биде суудал", price: 890000, image: img("bidet1.jpg"), categorySlug: "bide", rating: 0, stock: 15, unit: "1ш", isFeatured: true, isNew: true },
 
   // Шүршүүр
-  { id: "bm-1401", name: "Борооны шүршүүр 30см толгойтой", price: 185000, image: img("1561361398-d1f7b6cfee79"), categorySlug: "shurshuur", rating: 0, stock: 70, unit: "1ш", isFeatured: true },
-  { id: "bm-1402", name: "Гар шүршүүр 3 горимтой", price: 35000, image: img("1698724624855-e9dbc5a0bddb"), categorySlug: "shurshuur", rating: 0, stock: 260, unit: "1ш", isNew: true },
-  { id: "bm-1403", name: "Шүршүүрийн систем термостаттай", price: 420000, image: img("1576678433413-202829a1ab98"), categorySlug: "shurshuur", rating: 0, stock: 30, unit: "1ш" },
+  { id: "bh-4001", name: "Шүршүүрийн багана хром", price: 285000, oldPrice: 320000, image: img("shower1.jpg"), categorySlug: "shurshuur", rating: 0, stock: 50, unit: "1ш", isFeatured: true },
+  { id: "bh-4002", name: "Гар шүршүүр", price: 65000, image: img("shower2.jpg"), categorySlug: "shurshuur", rating: 0, stock: 120, unit: "1ш", isNew: true },
+  { id: "bh-4003", name: "Шүршүүрийн багана хар матт", price: 340000, image: img("shower3.jpg"), categorySlug: "shurshuur", rating: 0, stock: 35, unit: "1ш" },
 
-  // Ванн
-  { id: "bm-1501", name: "Акрилан ванн 170см", price: 680000, oldPrice: 750000, image: img("1620626011761-996317b8d101"), categorySlug: "vann", rating: 0, stock: 20, unit: "1ш", isFeatured: true },
-  { id: "bm-1502", name: "Чугуун ванн сонгодог хэлбэртэй", price: 1250000, image: img("1521783593447-5702b9bfd267"), categorySlug: "vann", rating: 0, stock: 8, unit: "1ш" },
-  { id: "bm-1503", name: "Булангийн ванн 150x150", price: 720000, image: img("1644068298141-6333cb147520"), categorySlug: "vann", rating: 0, stock: 12, unit: "1ш", isNew: true },
-
-  // Душны кабин
-  { id: "bm-1601", name: "Душны кабин 90x90 шилэн хаалгатай", price: 950000, image: img("1580750494923-a06004b452cd"), categorySlug: "dush-cabin", rating: 0, stock: 18, unit: "1ш", isFeatured: true, isNew: true },
-  { id: "bm-1602", name: "Душны бокс гидромассажтай", price: 1850000, image: img("1608651061499-ff031fbf6645"), categorySlug: "dush-cabin", rating: 0, stock: 6, unit: "1ш" },
-
-  // Толь
-  { id: "bm-1701", name: "LED гэрэлтэй угаалгын өрөөний толь 70см", price: 175000, image: img("1519087630026-63fb0dab69bb"), categorySlug: "toli", rating: 0, stock: 55, unit: "1ш", isFeatured: true, isNew: true },
-  { id: "bm-1702", name: "Дугуй толь антик хүрээтэй", price: 95000, image: img("1663659504863-43dd69a5fda2"), categorySlug: "toli", rating: 0, stock: 75, unit: "1ш" },
-
-  // Угаалгын өрөөний тавилга
-  { id: "bm-1801", name: "Угаалтуурын шкаф 80см 2 хаалгатай", price: 380000, image: img("1595156066164-410d89ad9a4f"), categorySlug: "tavilga", rating: 0, stock: 28, unit: "1ш", isFeatured: true },
-  { id: "bm-1802", name: "Өлгүүр шкаф толин хаалгатай", price: 210000, image: img("1630699144606-4bb0525961f4"), categorySlug: "tavilga", rating: 0, stock: 44, unit: "1ш", isNew: true },
-
-  // Дагалдах хэрэгсэл
-  { id: "bm-1901", name: "Алчуур өлгүүр зэвэрдэггүй ган", price: 28000, image: img("1656646523991-a04588a99770"), categorySlug: "dagaldah", rating: 0, stock: 300, unit: "1ш", isNew: true },
-  { id: "bm-1902", name: "Угаалгын өрөөний 5 хэсэгтэй иж бүрдэл", price: 65000, oldPrice: 78000, image: img("1589898362790-edba11d34869"), categorySlug: "dagaldah", rating: 0, stock: 130, unit: "1 иж" },
-
-  // Халаагч радиатор
-  { id: "bm-2001", name: "Халаагч радиатор алчуур хатаагч 60x80", price: 195000, image: img("1711059949530-a3057eac6f1c"), categorySlug: "radiator", rating: 0, stock: 50, unit: "1ш", isFeatured: true, isNew: true },
-  { id: "bm-2002", name: "Цахилгаан алчуур хатаагч хром", price: 145000, image: img("1595182939836-5d4ba24ae7bf"), categorySlug: "radiator", rating: 0, stock: 60, unit: "1ш" },
+  // Иж бүрдэл
+  { id: "bh-5001", name: "Угаалтуур ба суултуурын иж бүрдэл", price: 680000, oldPrice: 780000, image: img("sink_toilet_combo1.jpg"), categorySlug: "combo", rating: 0, stock: 12, unit: "1 иж", isFeatured: true },
+  { id: "bh-5002", name: "Тансаг угаалгын өрөөний иж бүрдэл", price: 920000, image: img("sink_toilet_combo2.jpg"), categorySlug: "combo", rating: 0, stock: 6, unit: "1 иж", isNew: true },
+  { id: "bh-5003", name: "Угаалтуур ба суултуурын иж бүрдэл хар", price: 750000, image: img("sink_toilet_combo3.jpg"), categorySlug: "combo", rating: 0, stock: 8, unit: "1 иж" },
 ];
 
 export function getProduct(id: string): Product | undefined {

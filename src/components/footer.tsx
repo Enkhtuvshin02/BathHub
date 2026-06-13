@@ -29,15 +29,15 @@ export function Footer() {
           <a href="tel:77100100" className="flex items-center gap-1.5 hover:text-brand">
             <Phone className="size-4" /> 77100100
           </a>
-          <a href="mailto:info@bathmall.mn" className="flex items-center gap-1.5 hover:text-brand">
-            <Mail className="size-4" /> info@bathmall.mn
+          <a href="mailto:info@bathhub.mn" className="flex items-center gap-1.5 hover:text-brand">
+            <Mail className="size-4" /> info@bathhub.mn
           </a>
         </div>
       </div>
 
       <div className="border-t border-border-subtle">
         <div className="mx-auto max-w-[1280px] px-4 py-3 text-center text-xs text-muted-foreground">
-          © 2026 BathMall.mn. Бүх эрх хуулиар хамгаалагдсан.
+          © 2026 BathHub. Бүх эрх хуулиар хамгаалагдсан.
         </div>
       </div>
     </footer>

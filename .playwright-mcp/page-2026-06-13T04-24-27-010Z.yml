@@ -1,0 +1,463 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - paragraph [ref=e4]: BathHub — таны угаалгын өрөөний дэлгүүрт тавтай морил !
+    - generic [ref=e5]:
+      - link "Бидний тухай" [ref=e6] [cursor=pointer]:
+        - /url: /about
+      - link "Тусламж" [ref=e7] [cursor=pointer]:
+        - /url: /contact
+      - link "77100100" [ref=e8] [cursor=pointer]:
+        - /url: tel:77100100
+        - img [ref=e9]
+        - text: "77100100"
+      - link "info@bathhub.mn" [ref=e11] [cursor=pointer]:
+        - /url: mailto:info@bathhub.mn
+        - img [ref=e12]
+        - text: info@bathhub.mn
+  - banner [ref=e15]:
+    - generic [ref=e16]:
+      - link "BathHub logo BathHub" [ref=e17] [cursor=pointer]:
+        - /url: /
+        - img "BathHub logo" [ref=e18]
+        - generic [ref=e19]: BathHub
+      - generic [ref=e20]:
+        - textbox "Бүтээгдэхүүн хайх.." [ref=e21]
+        - button "Хайх" [ref=e22]:
+          - img [ref=e23]
+          - text: Хайх
+      - generic [ref=e26]:
+        - button "Хадгалсан" [ref=e27]:
+          - img [ref=e28]
+        - link "Сагс" [ref=e30] [cursor=pointer]:
+          - /url: /cart
+          - img [ref=e32]
+          - generic [ref=e36]:
+            - generic [ref=e37]: Сагс
+            - generic [ref=e38]: 0₮
+        - link "Нэвтрэх" [ref=e39] [cursor=pointer]:
+          - /url: /login
+          - img [ref=e40]
+          - generic [ref=e43]: Нэвтрэх
+  - navigation [ref=e44]:
+    - generic [ref=e45]:
+      - button "Ангилал" [ref=e47]:
+        - img [ref=e48]
+        - text: Ангилал
+        - img [ref=e53]
+      - generic [ref=e55]:
+        - img [ref=e56]
+        - text: Улаанбаатар хотод 24-48 цагт хүргэнэ
+  - main [ref=e61]:
+    - generic [ref=e63]:
+      - generic [ref=e64]:
+        - heading "ТАНЫ УГААЛГЫН ӨРӨӨГ ШИНЭЧИЛЬЕ" [level=2] [ref=e65]
+        - paragraph [ref=e66]: Унитаз, угаалтуур, ванн, шүршүүр — чанартай сантехник, шуурхай хүргэлт
+        - link "Дэлгүүр хэсэх" [ref=e67] [cursor=pointer]:
+          - /url: /product
+      - button "Өмнөх" [ref=e68]:
+        - img [ref=e69]
+      - button "Дараах" [ref=e71]:
+        - img [ref=e72]
+      - generic [ref=e74]:
+        - button "Слайд 1" [ref=e75]
+        - button "Слайд 2" [ref=e76]
+    - generic [ref=e77]:
+      - heading "Ангиллаар дэлгүүр хэсэх" [level=2] [ref=e78]
+      - generic [ref=e79]:
+        - link "Унитаз Унитаз" [ref=e80] [cursor=pointer]:
+          - /url: /product?category=unitaz
+          - img "Унитаз" [ref=e82]
+          - generic [ref=e83]: Унитаз
+        - link "Угаалтуур Угаалтуур" [ref=e84] [cursor=pointer]:
+          - /url: /product?category=ugaaltuur
+          - img "Угаалтуур" [ref=e86]
+          - generic [ref=e87]: Угаалтуур
+        - link "Ванн Ванн" [ref=e88] [cursor=pointer]:
+          - /url: /product?category=vann
+          - img "Ванн" [ref=e90]
+          - generic [ref=e91]: Ванн
+        - link "Шүршүүр Шүршүүр" [ref=e92] [cursor=pointer]:
+          - /url: /product?category=shurshuur
+          - img "Шүршүүр" [ref=e94]
+          - generic [ref=e95]: Шүршүүр
+        - link "Холигч, цорго Холигч, цорго" [ref=e96] [cursor=pointer]:
+          - /url: /product?category=holigch
+          - img "Холигч, цорго" [ref=e98]
+          - generic [ref=e99]: Холигч, цорго
+        - link "Угаалгын өрөөний тавилга Угаалгын өрөөний тавилга" [ref=e100] [cursor=pointer]:
+          - /url: /product?category=tavilga
+          - img "Угаалгын өрөөний тавилга" [ref=e102]
+          - generic [ref=e103]: Угаалгын өрөөний тавилга
+    - generic [ref=e104]:
+      - generic [ref=e105]:
+        - generic [ref=e106]:
+          - heading "Шинэ бүтээгдэхүүн" [level=2] [ref=e107]
+          - paragraph [ref=e108]: Шинээр нэмэгдсэн сантехникийн бүтээгдэхүүнүүд
+        - link "Бүгдийг харах" [ref=e109] [cursor=pointer]:
+          - /url: /product?filter=new
+          - text: Бүгдийг харах
+          - img [ref=e110]
+      - generic [ref=e112]:
+        - generic [ref=e113]:
+          - link "Шалны унитаз бачокны хамт Шинэ" [ref=e114] [cursor=pointer]:
+            - /url: /product/bm-1002
+            - img "Шалны унитаз бачокны хамт" [ref=e115]
+            - generic [ref=e116]: Шинэ
+          - generic [ref=e117]:
+            - link "Шалны унитаз бачокны хамт" [ref=e118] [cursor=pointer]:
+              - /url: /product/bm-1002
+            - generic [ref=e119]:
+              - img [ref=e120]
+              - generic [ref=e122]: "0"
+            - generic [ref=e123]:
+              - generic [ref=e124]: 320,000₮
+              - button "Сагсанд хийх" [ref=e125]:
+                - img [ref=e126]
+        - generic [ref=e130]:
+          - link "Ширээний угаалтуур дугуй хэлбэртэй Шинэ" [ref=e131] [cursor=pointer]:
+            - /url: /product/bm-1102
+            - img "Ширээний угаалтуур дугуй хэлбэртэй" [ref=e132]
+            - generic [ref=e133]: Шинэ
+          - generic [ref=e134]:
+            - link "Ширээний угаалтуур дугуй хэлбэртэй" [ref=e135] [cursor=pointer]:
+              - /url: /product/bm-1102
+            - generic [ref=e136]:
+              - img [ref=e137]
+              - generic [ref=e139]: "0"
+            - generic [ref=e140]:
+              - generic [ref=e141]: 98,000₮
+              - button "Сагсанд хийх" [ref=e142]:
+                - img [ref=e143]
+        - generic [ref=e147]:
+          - link "Электрон биде халуун усны функцтэй Шинэ" [ref=e148] [cursor=pointer]:
+            - /url: /product/bm-1201
+            - img "Электрон биде халуун усны функцтэй" [ref=e149]
+            - generic [ref=e150]: Шинэ
+          - generic [ref=e151]:
+            - link "Электрон биде халуун усны функцтэй" [ref=e152] [cursor=pointer]:
+              - /url: /product/bm-1201
+            - generic [ref=e153]:
+              - img [ref=e154]
+              - generic [ref=e156]: "0"
+            - generic [ref=e157]:
+              - generic [ref=e158]: 890,000₮
+              - button "Сагсанд хийх" [ref=e159]:
+                - img [ref=e160]
+        - generic [ref=e164]:
+          - link "Гал тогооны холигч өндөр цорготой Шинэ" [ref=e165] [cursor=pointer]:
+            - /url: /product/bm-1302
+            - img "Гал тогооны холигч өндөр цорготой" [ref=e166]
+            - generic [ref=e167]: Шинэ
+          - generic [ref=e168]:
+            - link "Гал тогооны холигч өндөр цорготой" [ref=e169] [cursor=pointer]:
+              - /url: /product/bm-1302
+            - generic [ref=e170]:
+              - img [ref=e171]
+              - generic [ref=e173]: "0"
+            - generic [ref=e174]:
+              - generic [ref=e175]: 120,000₮
+              - button "Сагсанд хийх" [ref=e176]:
+                - img [ref=e177]
+        - generic [ref=e181]:
+          - link "Гар шүршүүр 3 горимтой Шинэ" [ref=e182] [cursor=pointer]:
+            - /url: /product/bm-1402
+            - img "Гар шүршүүр 3 горимтой" [ref=e183]
+            - generic [ref=e184]: Шинэ
+          - generic [ref=e185]:
+            - link "Гар шүршүүр 3 горимтой" [ref=e186] [cursor=pointer]:
+              - /url: /product/bm-1402
+            - generic [ref=e187]:
+              - img [ref=e188]
+              - generic [ref=e190]: "0"
+            - generic [ref=e191]:
+              - generic [ref=e192]: 35,000₮
+              - button "Сагсанд хийх" [ref=e193]:
+                - img [ref=e194]
+        - generic [ref=e198]:
+          - link "Булангийн ванн 150x150 Шинэ" [ref=e199] [cursor=pointer]:
+            - /url: /product/bm-1503
+            - img "Булангийн ванн 150x150" [ref=e200]
+            - generic [ref=e201]: Шинэ
+          - generic [ref=e202]:
+            - link "Булангийн ванн 150x150" [ref=e203] [cursor=pointer]:
+              - /url: /product/bm-1503
+            - generic [ref=e204]:
+              - img [ref=e205]
+              - generic [ref=e207]: "0"
+            - generic [ref=e208]:
+              - generic [ref=e209]: 720,000₮
+              - button "Сагсанд хийх" [ref=e210]:
+                - img [ref=e211]
+        - generic [ref=e215]:
+          - link "Душны кабин 90x90 шилэн хаалгатай Шинэ" [ref=e216] [cursor=pointer]:
+            - /url: /product/bm-1601
+            - img "Душны кабин 90x90 шилэн хаалгатай" [ref=e217]
+            - generic [ref=e218]: Шинэ
+          - generic [ref=e219]:
+            - link "Душны кабин 90x90 шилэн хаалгатай" [ref=e220] [cursor=pointer]:
+              - /url: /product/bm-1601
+            - generic [ref=e221]:
+              - img [ref=e222]
+              - generic [ref=e224]: "0"
+            - generic [ref=e225]:
+              - generic [ref=e226]: 950,000₮
+              - button "Сагсанд хийх" [ref=e227]:
+                - img [ref=e228]
+        - generic [ref=e232]:
+          - link "LED гэрэлтэй угаалгын өрөөний толь 70см Шинэ" [ref=e233] [cursor=pointer]:
+            - /url: /product/bm-1701
+            - img "LED гэрэлтэй угаалгын өрөөний толь 70см" [ref=e234]
+            - generic [ref=e235]: Шинэ
+          - generic [ref=e236]:
+            - link "LED гэрэлтэй угаалгын өрөөний толь 70см" [ref=e237] [cursor=pointer]:
+              - /url: /product/bm-1701
+            - generic [ref=e238]:
+              - img [ref=e239]
+              - generic [ref=e241]: "0"
+            - generic [ref=e242]:
+              - generic [ref=e243]: 175,000₮
+              - button "Сагсанд хийх" [ref=e244]:
+                - img [ref=e245]
+        - generic [ref=e249]:
+          - link "Өлгүүр шкаф толин хаалгатай Шинэ" [ref=e250] [cursor=pointer]:
+            - /url: /product/bm-1802
+            - img "Өлгүүр шкаф толин хаалгатай" [ref=e251]
+            - generic [ref=e252]: Шинэ
+          - generic [ref=e253]:
+            - link "Өлгүүр шкаф толин хаалгатай" [ref=e254] [cursor=pointer]:
+              - /url: /product/bm-1802
+            - generic [ref=e255]:
+              - img [ref=e256]
+              - generic [ref=e258]: "0"
+            - generic [ref=e259]:
+              - generic [ref=e260]: 210,000₮
+              - button "Сагсанд хийх" [ref=e261]:
+                - img [ref=e262]
+        - generic [ref=e266]:
+          - link "Алчуур өлгүүр зэвэрдэггүй ган Шинэ" [ref=e267] [cursor=pointer]:
+            - /url: /product/bm-1901
+            - img "Алчуур өлгүүр зэвэрдэггүй ган" [ref=e268]
+            - generic [ref=e269]: Шинэ
+          - generic [ref=e270]:
+            - link "Алчуур өлгүүр зэвэрдэггүй ган" [ref=e271] [cursor=pointer]:
+              - /url: /product/bm-1901
+            - generic [ref=e272]:
+              - img [ref=e273]
+              - generic [ref=e275]: "0"
+            - generic [ref=e276]:
+              - generic [ref=e277]: 28,000₮
+              - button "Сагсанд хийх" [ref=e278]:
+                - img [ref=e279]
+        - generic [ref=e283]:
+          - link "Халаагч радиатор алчуур хатаагч 60x80 Шинэ" [ref=e284] [cursor=pointer]:
+            - /url: /product/bm-2001
+            - img "Халаагч радиатор алчуур хатаагч 60x80" [ref=e285]
+            - generic [ref=e286]: Шинэ
+          - generic [ref=e287]:
+            - link "Халаагч радиатор алчуур хатаагч 60x80" [ref=e288] [cursor=pointer]:
+              - /url: /product/bm-2001
+            - generic [ref=e289]:
+              - img [ref=e290]
+              - generic [ref=e292]: "0"
+            - generic [ref=e293]:
+              - generic [ref=e294]: 195,000₮
+              - button "Сагсанд хийх" [ref=e295]:
+                - img [ref=e296]
+    - generic [ref=e300]:
+      - generic [ref=e301]:
+        - generic [ref=e302]:
+          - heading "Онцлох бүтээгдэхүүн" [level=2] [ref=e303]
+          - paragraph [ref=e304]: Хамгийн их эрэлттэй угаалгын өрөөний бараанууд
+        - link "Бүгдийг харах" [ref=e305] [cursor=pointer]:
+          - /url: /product?filter=featured
+          - text: Бүгдийг харах
+          - img [ref=e306]
+      - generic [ref=e308]:
+        - generic [ref=e309]:
+          - link "Хана дүүжин унитаз softclose суултуртай -13%" [ref=e310] [cursor=pointer]:
+            - /url: /product/bm-1001
+            - img "Хана дүүжин унитаз softclose суултуртай" [ref=e311]
+            - generic [ref=e312]: "-13%"
+          - generic [ref=e313]:
+            - link "Хана дүүжин унитаз softclose суултуртай" [ref=e314] [cursor=pointer]:
+              - /url: /product/bm-1001
+            - generic [ref=e315]:
+              - img [ref=e316]
+              - generic [ref=e318]: "0"
+            - generic [ref=e319]:
+              - generic [ref=e320]:
+                - generic [ref=e321]: 520,000₮
+                - text: 450,000₮
+              - button "Сагсанд хийх" [ref=e322]:
+                - img [ref=e323]
+        - generic [ref=e327]:
+          - link "Гранит угаалтуур цагаан 60см" [ref=e328] [cursor=pointer]:
+            - /url: /product/bm-1101
+            - img "Гранит угаалтуур цагаан 60см" [ref=e329]
+          - generic [ref=e330]:
+            - link "Гранит угаалтуур цагаан 60см" [ref=e331] [cursor=pointer]:
+              - /url: /product/bm-1101
+            - generic [ref=e332]:
+              - img [ref=e333]
+              - generic [ref=e335]: "0"
+            - generic [ref=e336]:
+              - generic [ref=e337]: 165,000₮
+              - button "Сагсанд хийх" [ref=e338]:
+                - img [ref=e339]
+        - generic [ref=e343]:
+          - link "Электрон биде халуун усны функцтэй Шинэ" [ref=e344] [cursor=pointer]:
+            - /url: /product/bm-1201
+            - img "Электрон биде халуун усны функцтэй" [ref=e345]
+            - generic [ref=e346]: Шинэ
+          - generic [ref=e347]:
+            - link "Электрон биде халуун усны функцтэй" [ref=e348] [cursor=pointer]:
+              - /url: /product/bm-1201
+            - generic [ref=e349]:
+              - img [ref=e350]
+              - generic [ref=e352]: "0"
+            - generic [ref=e353]:
+              - generic [ref=e354]: 890,000₮
+              - button "Сагсанд хийх" [ref=e355]:
+                - img [ref=e356]
+        - generic [ref=e360]:
+          - link "Угаалтуурын холигч хром" [ref=e361] [cursor=pointer]:
+            - /url: /product/bm-1301
+            - img "Угаалтуурын холигч хром" [ref=e362]
+          - generic [ref=e363]:
+            - link "Угаалтуурын холигч хром" [ref=e364] [cursor=pointer]:
+              - /url: /product/bm-1301
+            - generic [ref=e365]:
+              - img [ref=e366]
+              - generic [ref=e368]: "0"
+            - generic [ref=e369]:
+              - generic [ref=e370]: 75,000₮
+              - button "Сагсанд хийх" [ref=e371]:
+                - img [ref=e372]
+        - generic [ref=e376]:
+          - link "Борооны шүршүүр 30см толгойтой" [ref=e377] [cursor=pointer]:
+            - /url: /product/bm-1401
+            - img "Борооны шүршүүр 30см толгойтой" [ref=e378]
+          - generic [ref=e379]:
+            - link "Борооны шүршүүр 30см толгойтой" [ref=e380] [cursor=pointer]:
+              - /url: /product/bm-1401
+            - generic [ref=e381]:
+              - img [ref=e382]
+              - generic [ref=e384]: "0"
+            - generic [ref=e385]:
+              - generic [ref=e386]: 185,000₮
+              - button "Сагсанд хийх" [ref=e387]:
+                - img [ref=e388]
+        - generic [ref=e392]:
+          - link "Акрилан ванн 170см -9%" [ref=e393] [cursor=pointer]:
+            - /url: /product/bm-1501
+            - img "Акрилан ванн 170см" [ref=e394]
+            - generic [ref=e395]: "-9%"
+          - generic [ref=e396]:
+            - link "Акрилан ванн 170см" [ref=e397] [cursor=pointer]:
+              - /url: /product/bm-1501
+            - generic [ref=e398]:
+              - img [ref=e399]
+              - generic [ref=e401]: "0"
+            - generic [ref=e402]:
+              - generic [ref=e403]:
+                - generic [ref=e404]: 750,000₮
+                - text: 680,000₮
+              - button "Сагсанд хийх" [ref=e405]:
+                - img [ref=e406]
+        - generic [ref=e410]:
+          - link "Душны кабин 90x90 шилэн хаалгатай Шинэ" [ref=e411] [cursor=pointer]:
+            - /url: /product/bm-1601
+            - img "Душны кабин 90x90 шилэн хаалгатай" [ref=e412]
+            - generic [ref=e413]: Шинэ
+          - generic [ref=e414]:
+            - link "Душны кабин 90x90 шилэн хаалгатай" [ref=e415] [cursor=pointer]:
+              - /url: /product/bm-1601
+            - generic [ref=e416]:
+              - img [ref=e417]
+              - generic [ref=e419]: "0"
+            - generic [ref=e420]:
+              - generic [ref=e421]: 950,000₮
+              - button "Сагсанд хийх" [ref=e422]:
+                - img [ref=e423]
+        - generic [ref=e427]:
+          - link "LED гэрэлтэй угаалгын өрөөний толь 70см Шинэ" [ref=e428] [cursor=pointer]:
+            - /url: /product/bm-1701
+            - img "LED гэрэлтэй угаалгын өрөөний толь 70см" [ref=e429]
+            - generic [ref=e430]: Шинэ
+          - generic [ref=e431]:
+            - link "LED гэрэлтэй угаалгын өрөөний толь 70см" [ref=e432] [cursor=pointer]:
+              - /url: /product/bm-1701
+            - generic [ref=e433]:
+              - img [ref=e434]
+              - generic [ref=e436]: "0"
+            - generic [ref=e437]:
+              - generic [ref=e438]: 175,000₮
+              - button "Сагсанд хийх" [ref=e439]:
+                - img [ref=e440]
+        - generic [ref=e444]:
+          - link "Угаалтуурын шкаф 80см 2 хаалгатай" [ref=e445] [cursor=pointer]:
+            - /url: /product/bm-1801
+            - img "Угаалтуурын шкаф 80см 2 хаалгатай" [ref=e446]
+          - generic [ref=e447]:
+            - link "Угаалтуурын шкаф 80см 2 хаалгатай" [ref=e448] [cursor=pointer]:
+              - /url: /product/bm-1801
+            - generic [ref=e449]:
+              - img [ref=e450]
+              - generic [ref=e452]: "0"
+            - generic [ref=e453]:
+              - generic [ref=e454]: 380,000₮
+              - button "Сагсанд хийх" [ref=e455]:
+                - img [ref=e456]
+        - generic [ref=e460]:
+          - link "Халаагч радиатор алчуур хатаагч 60x80 Шинэ" [ref=e461] [cursor=pointer]:
+            - /url: /product/bm-2001
+            - img "Халаагч радиатор алчуур хатаагч 60x80" [ref=e462]
+            - generic [ref=e463]: Шинэ
+          - generic [ref=e464]:
+            - link "Халаагч радиатор алчуур хатаагч 60x80" [ref=e465] [cursor=pointer]:
+              - /url: /product/bm-2001
+            - generic [ref=e466]:
+              - img [ref=e467]
+              - generic [ref=e469]: "0"
+            - generic [ref=e470]:
+              - generic [ref=e471]: 195,000₮
+              - button "Сагсанд хийх" [ref=e472]:
+                - img [ref=e473]
+  - contentinfo [ref=e477]:
+    - generic [ref=e478]:
+      - generic [ref=e479]:
+        - link "BathHub logo BathHub" [ref=e480] [cursor=pointer]:
+          - /url: /
+          - img "BathHub logo" [ref=e481]
+          - generic [ref=e482]: BathHub
+        - paragraph [ref=e483]: Угаалгын өрөө, сантехникийн цахим дэлгүүр
+      - generic [ref=e484]:
+        - link "Үйлчилгээний нөхцөл" [ref=e485] [cursor=pointer]:
+          - /url: /service
+        - link "Хүргэлтийн нөхцөл" [ref=e486] [cursor=pointer]:
+          - /url: /delivery
+        - link "Холбоо барих" [ref=e487] [cursor=pointer]:
+          - /url: /contact
+        - link "77100100" [ref=e488] [cursor=pointer]:
+          - /url: tel:77100100
+          - img [ref=e489]
+          - text: "77100100"
+        - link "info@bathhub.mn" [ref=e491] [cursor=pointer]:
+          - /url: mailto:info@bathhub.mn
+          - img [ref=e492]
+          - text: info@bathhub.mn
+    - generic [ref=e496]: © 2026 BathHub. Бүх эрх хуулиар хамгаалагдсан.
+  - complementary [ref=e497]:
+    - generic [ref=e498]:
+      - heading "Сагс (0)" [level=2] [ref=e499]:
+        - img [ref=e500]
+        - text: Сагс
+        - generic [ref=e504]: (0)
+      - button "Хаах" [ref=e505]:
+        - img [ref=e506]
+    - generic [ref=e509]:
+      - img [ref=e510]
+      - paragraph [ref=e514]: Таны сагс хоосон байна
+  - button "Open Next.js Dev Tools" [ref=e520] [cursor=pointer]:
+    - img [ref=e521]
+  - alert [ref=e524]

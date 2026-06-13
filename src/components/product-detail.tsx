@@ -27,18 +27,13 @@ export function ProductDetail({ product }: { product: Product }) {
 
       <div className="grid gap-8 lg:grid-cols-2">
         {/* gallery */}
-        <div className="flex gap-3">
-          <div className="flex flex-col gap-2">
-            {[0, 1, 2].map((n) => (
-              <div key={n} className={`relative size-16 overflow-hidden rounded-lg border bg-muted ${n === 0 ? "border-brand" : "border-border-subtle"}`}>
-                <Image src={product.image} alt="" fill sizes="64px" className="object-cover" />
-              </div>
-            ))}
-          </div>
-          <div className="relative flex-1 overflow-hidden rounded-card border border-border-subtle bg-muted">
-            <Image src={product.image} alt={product.name} width={700} height={700} className="h-full w-full object-cover" />
-          </div>
-        </div>
+        <Image
+          src={product.image}
+          alt={product.name}
+          width={800}
+          height={800}
+          className="w-full h-auto rounded-card"
+        />
 
         {/* info */}
         <div>

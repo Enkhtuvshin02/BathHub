@@ -7,7 +7,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 const slides = [
   {
     title: "ТАНЫ УГААЛГЫН\nӨРӨӨГ ШИНЭЧИЛЬЕ",
-    subtitle: "Унитаз, угаалтуур, ванн, шүршүүр — чанартай сантехник, шуурхай хүргэлт",
+    subtitle: "Суултуур, угаалтуур, биде, шүршүүр — чанартай сантехник, шуурхай хүргэлт",
     cta: "Дэлгүүр хэсэх",
     bg: "from-[#0a4d7a] via-[#0e7fd1] to-[#3aa0e0]",
   },
