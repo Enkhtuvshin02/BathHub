@@ -1,4 +1,3 @@
-import { Hero } from "@/components/hero";
 import { CategoryShowcase } from "@/components/category-showcase";
 import { ProductSection } from "@/components/product-section";
 import { db } from "@/lib/db";
@@ -21,7 +20,6 @@ export default async function Home() {
 
   return (
     <>
-      <Hero />
       <CategoryShowcase />
       <ProductSection
         title="Шинэ бүтээгдэхүүн"
