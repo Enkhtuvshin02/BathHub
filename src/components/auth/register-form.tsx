@@ -37,11 +37,11 @@ export function RegisterForm() {
     return er;
   };
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const er = validate();
     if (Object.keys(er).length) { setErrors(er); return; }
-    const res = signUp({
+    const res = await signUp({
       firstName: form.firstName.trim(),
       lastName: form.lastName.trim(),
       email: form.email.trim(),

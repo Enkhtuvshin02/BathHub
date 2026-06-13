@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
-import { categories, products, categoryName } from "@/lib/data";
+import { useEffect, useMemo, useState } from "react";
+import { categories, categoryName } from "@/lib/data";
+import type { Product } from "@/lib/types";
 import { ProductCard } from "./product-card";
 
 const filterChips = [
@@ -17,23 +18,31 @@ type Sort = "default" | "price-asc" | "price-desc";
 export function ProductListing() {
   const params = useSearchParams();
   const category = params.get("category") ?? "";
-  const q = (params.get("q") ?? "").toLowerCase().trim();
+  const q = (params.get("q") ?? "").trim();
   const filter = params.get("filter") ?? "";
   const [sort, setSort] = useState<Sort>("default");
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    const sp = new URLSearchParams();
+    if (category) sp.set("category", category);
+    if (filter) sp.set("filter", filter);
+    if (q) sp.set("q", q);
+    fetch(`/api/products${sp.toString() ? `?${sp}` : ""}`)
+      .then((r) => r.json())
+      .then((data: Product[]) => setAllProducts(data))
+      .catch(() => setAllProducts([]))
+      .finally(() => setLoading(false));
+  }, [category, filter, q]);
 
   const list = useMemo(() => {
-    let out = products.filter((p) => {
-      if (category && p.categorySlug !== category) return false;
-      if (q && !p.name.toLowerCase().includes(q)) return false;
-      if (filter === "featured" && !p.isFeatured) return false;
-      if (filter === "new" && !p.isNew) return false;
-      if (filter === "sale" && !p.oldPrice) return false;
-      return true;
-    });
-    if (sort === "price-asc") out = [...out].sort((a, b) => a.price - b.price);
-    if (sort === "price-desc") out = [...out].sort((a, b) => b.price - a.price);
+    let out = [...allProducts];
+    if (sort === "price-asc") out = out.sort((a, b) => a.price - b.price);
+    if (sort === "price-desc") out = out.sort((a, b) => b.price - a.price);
     return out;
-  }, [category, q, filter, sort]);
+  }, [allProducts, sort]);
 
   const heading = q
     ? `"${q}" — хайлтын үр дүн`
@@ -100,9 +109,11 @@ export function ProductListing() {
           <div className="mb-4 flex items-center justify-between">
             <h1 className="text-xl font-bold">
               {heading}
-              <span className="ml-2 text-sm font-normal text-muted-foreground">
-                {list.length} бүтээгдэхүүн
-              </span>
+              {!loading && (
+                <span className="ml-2 text-sm font-normal text-muted-foreground">
+                  {list.length} бүтээгдэхүүн
+                </span>
+              )}
             </h1>
             <select
               value={sort}
@@ -115,7 +126,9 @@ export function ProductListing() {
             </select>
           </div>
 
-          {list.length === 0 ? (
+          {loading ? (
+            <p className="py-20 text-center text-muted-foreground">Уншиж байна…</p>
+          ) : list.length === 0 ? (
             <p className="py-20 text-center text-muted-foreground">Бүтээгдэхүүн олдсонгүй.</p>
           ) : (
             <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">

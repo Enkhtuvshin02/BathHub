@@ -74,8 +74,8 @@ export function AccountMenu() {
           </Link>
           <div className="my-1 border-t border-border-subtle" />
           <button
-            onClick={() => {
-              signOut();
+            onClick={async () => {
+              await signOut();
               setOpen(false);
             }}
             className="flex w-full items-center gap-2.5 px-4 py-2.5 text-sm text-sale hover:bg-muted"

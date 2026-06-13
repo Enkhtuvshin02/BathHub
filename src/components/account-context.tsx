@@ -9,98 +9,75 @@ import {
 } from "react";
 
 export type User = {
+  id?: string;
   firstName: string;
   lastName: string;
   email: string;
   phone: string;
 };
 
-type StoredUser = User & { password: string };
-
-// Pre-seeded demo account so the store isn't empty on first run.
-export const demoUser: User = {
-  firstName: "Энхтүвшин",
-  lastName: "Энхтайван",
-  email: "tuvshin674@gmail.com",
-  phone: "86155401",
-};
-export const DEMO_PASSWORD = "demo1234";
-const demoStored: StoredUser = { ...demoUser, password: DEMO_PASSWORD };
-
 export type AuthResult = { ok: boolean; error?: string };
-export type SignUpInput = User & { password: string };
+export type SignUpInput = Omit<User, "id"> & { password: string };
 
 type AccountState = {
   user: User | null;
   hydrated: boolean;
-  signIn: (email: string, password: string) => AuthResult;
-  signUp: (data: SignUpInput) => AuthResult;
-  signOut: () => void;
+  signIn: (email: string, password: string) => Promise<AuthResult>;
+  signUp: (data: SignUpInput) => Promise<AuthResult>;
+  signOut: () => Promise<void>;
 };
 
 const AccountContext = createContext<AccountState | null>(null);
-const USERS_KEY = "bathhub-users";
-const SESSION_KEY = "bathhub-account";
-
-const strip = (u: StoredUser): User => {
-  const { password: _pw, ...rest } = u;
-  void _pw;
-  return rest;
-};
 
 export function AccountProvider({ children }: { children: ReactNode }) {
-  const [users, setUsers] = useState<StoredUser[]>([demoStored]);
   const [user, setUser] = useState<User | null>(null);
   const [hydrated, setHydrated] = useState(false);
 
-  // Load persisted users + session once on mount.
   useEffect(() => {
-    try {
-      const rawUsers = localStorage.getItem(USERS_KEY);
-      const loaded: StoredUser[] = rawUsers ? JSON.parse(rawUsers) : [demoStored];
-      // ensure the demo account always exists
-      if (!loaded.some((u) => u.email === demoStored.email)) loaded.push(demoStored);
-      setUsers(loaded);
-
-      const rawSession = localStorage.getItem(SESSION_KEY);
-      if (rawSession) setUser(JSON.parse(rawSession));
-    } catch {
-      /* ignore */
-    }
-    setHydrated(true);
+    fetch("/api/auth/me")
+      .then((r) => r.json())
+      .then((data) => setUser(data ?? null))
+      .catch(() => setUser(null))
+      .finally(() => setHydrated(true));
   }, []);
 
-  useEffect(() => {
-    if (hydrated) localStorage.setItem(USERS_KEY, JSON.stringify(users));
-  }, [users, hydrated]);
-
-  useEffect(() => {
-    if (hydrated) localStorage.setItem(SESSION_KEY, JSON.stringify(user));
-  }, [user, hydrated]);
-
-  const signIn: AccountState["signIn"] = (email, password) => {
-    const found = users.find((u) => u.email.toLowerCase() === email.trim().toLowerCase());
-    if (!found) return { ok: false, error: "Бүртгэлтэй и-мэйл олдсонгүй." };
-    if (found.password !== password) return { ok: false, error: "Нууц үг буруу байна." };
-    setUser(strip(found));
+  const signIn: AccountState["signIn"] = async (email, password) => {
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+    if (!res.ok) {
+      const { error } = await res.json();
+      return { ok: false, error };
+    }
+    const data = await res.json();
+    setUser(data);
     return { ok: true };
   };
 
-  const signUp: AccountState["signUp"] = (data) => {
-    const email = data.email.trim().toLowerCase();
-    if (users.some((u) => u.email.toLowerCase() === email)) {
-      return { ok: false, error: "Энэ и-мэйл хаягаар бүртгэл үүссэн байна." };
+  const signUp: AccountState["signUp"] = async (data) => {
+    const res = await fetch("/api/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) {
+      const { error } = await res.json();
+      return { ok: false, error };
     }
-    const stored: StoredUser = { ...data, email: data.email.trim() };
-    setUsers((prev) => [...prev, stored]);
-    setUser(strip(stored));
+    const user = await res.json();
+    setUser(user);
     return { ok: true };
+  };
+
+  const signOut: AccountState["signOut"] = async () => {
+    await fetch("/api/auth/logout", { method: "POST" });
+    setUser(null);
   };
 
   return (
-    <AccountContext.Provider
-      value={{ user, hydrated, signIn, signUp, signOut: () => setUser(null) }}
-    >
+    <AccountContext.Provider value={{ user, hydrated, signIn, signUp, signOut }}>
       {children}
     </AccountContext.Provider>
   );
@@ -111,3 +88,12 @@ export function useAccount() {
   if (!ctx) throw new Error("useAccount must be used within AccountProvider");
   return ctx;
 }
+
+// Kept for backward compat with login-form demo button
+export const demoUser = {
+  email: "tuvshin674@gmail.com",
+  firstName: "Энхтүвшин",
+  lastName: "Энхтайван",
+  phone: "86155401",
+};
+export const DEMO_PASSWORD = "demo1234";

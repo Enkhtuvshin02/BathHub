@@ -1,5 +1,10 @@
 import type { CartLine } from "@/components/cart-context";
 
+export const BANK_ACCOUNTS = [
+  { bank: "Хаан банк", account: "XXXX XXXX XXXX", name: "BathHub ХХК" },
+  { bank: "М банк", account: "XXXX XXXX XXXX", name: "BathHub ХХК" },
+];
+
 export const DELIVERY_FEE = 6600; // Дотоодын хүргэлт
 export const ECO_BAG_FEE = 380; // Хүргэлтийн эко уут
 

@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { CheckCircle2, FileDown, Package, XCircle } from "lucide-react";
+import { CheckCircle2, Package, XCircle } from "lucide-react";
 import { useOrders } from "@/components/orders-context";
 import { CheckoutSteps } from "@/components/checkout/checkout-steps";
-import { QrPaymentModal } from "@/components/checkout/qr-payment-modal";
+import { BankTransferModal } from "@/components/checkout/bank-transfer-modal";
 import { formatPrice } from "@/lib/data";
 
 const PAY_WINDOW_MS = 2 * 24 * 60 * 60 * 1000; // 2 days
@@ -28,17 +28,28 @@ function Countdown({ deadline }: { deadline: number }) {
   const days = Math.floor(ms / 86400000);
   const hours = Math.floor((ms % 86400000) / 3600000);
   const mins = Math.floor((ms % 3600000) / 60000);
+  const secs = Math.floor((ms % 60000) / 1000);
   return (
-    <span className="font-bold">
-      {days.toString().padStart(2, "0")} өдөр : {hours.toString().padStart(2, "0")} цаг : {mins.toString().padStart(2, "0")} минут
+    <span className="font-bold tabular-nums">
+      {days.toString().padStart(2, "0")} өдөр : {hours.toString().padStart(2, "0")} цаг : {mins.toString().padStart(2, "0")} мин : {secs.toString().padStart(2, "0")} сек
     </span>
   );
 }
 
 export default function OrderDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const { getOrder, hydrated, cancelOrder, markPaid } = useOrders();
-  const [showQr, setShowQr] = useState(false);
+  const router = useRouter();
+  const { getOrder, hydrated, refreshOrders } = useOrders();
+  const [showBank, setShowBank] = useState(false);
+
+  useEffect(() => {
+    if (hydrated && !getOrder(id)) {
+      // Try refreshing once (order may have just been created)
+      refreshOrders();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [hydrated]);
+
   const order = getOrder(id);
 
   if (!hydrated) {
@@ -73,17 +84,10 @@ export default function OrderDetailPage() {
           <>
             <p className="mb-3 text-center text-2xl font-bold">Төлбөр хүлээгдэж байна</p>
             <div className="mb-4 rounded-lg bg-rating/10 px-4 py-3 text-sm text-foreground/80">
-              Төлбөр төлөгдсөний дараа таны захиалга баталгаажихыг анхаарна уу! Дээрх хугацаанд төлбөрөө
-              төлөөгүй тохиолдолд таны захиалга автоматаар цуцлагдана.
+              Дээрх хугацаанд төлбөрөө төлөөгүй тохиолдолд захиалга автоматаар цуцлагдана.
             </div>
-            <div className="flex flex-wrap gap-3">
-              <button onClick={() => cancelOrder(order.id)} className="rounded-lg border border-border-subtle px-5 py-2.5 text-sm font-medium hover:bg-muted">
-                Захиалга цуцлах
-              </button>
-              <button className="flex items-center gap-1.5 rounded-lg border border-border-subtle px-5 py-2.5 text-sm font-medium hover:bg-muted">
-                <FileDown className="size-4" /> Нэхэмжлэх татах
-              </button>
-              <button onClick={() => setShowQr(true)} className="ml-auto rounded-lg bg-brand px-6 py-2.5 text-sm font-semibold text-brand-foreground hover:bg-brand-hover">
+            <div className="flex justify-end">
+              <button onClick={() => setShowBank(true)} className="rounded-lg bg-brand px-6 py-2.5 text-sm font-semibold text-brand-foreground hover:bg-brand-hover">
                 Төлбөр төлөх
               </button>
             </div>
@@ -102,6 +106,9 @@ export default function OrderDetailPage() {
           <div className="flex flex-col items-center gap-2 py-4 text-center">
             <XCircle className="size-12 text-sale" />
             <p className="text-xl font-bold">Захиалга цуцлагдсан</p>
+            <Link href="/product" className="mt-2 rounded-lg bg-brand px-5 py-2 text-sm font-semibold text-brand-foreground hover:bg-brand-hover">
+              Дэлгүүр хэсэх
+            </Link>
           </div>
         )}
       </div>
@@ -127,7 +134,7 @@ export default function OrderDetailPage() {
         </dl>
       </div>
 
-      {/* delivery group + items */}
+      {/* items */}
       <div className="overflow-hidden rounded-card border border-border-subtle">
         <div className="flex items-center gap-2 border-b border-border-subtle bg-muted/40 px-4 py-3">
           <Package className="size-5 text-brand" />
@@ -150,12 +157,12 @@ export default function OrderDetailPage() {
         </ul>
       </div>
 
-      {showQr && (
-        <QrPaymentModal
+      {showBank && (
+        <BankTransferModal
           amount={order.total}
           orderId={order.id}
-          onConfirm={() => { markPaid(order.id); setShowQr(false); }}
-          onClose={() => setShowQr(false)}
+          onConfirm={() => { router.push("/orders"); setShowBank(false); }}
+          onClose={() => setShowBank(false)}
         />
       )}
     </div>

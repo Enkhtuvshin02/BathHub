@@ -5,55 +5,67 @@ import {
   useContext,
   useEffect,
   useState,
+  useCallback,
   type ReactNode,
 } from "react";
-import { generateOrderId, type Order } from "@/lib/checkout";
+import { type Order } from "@/lib/checkout";
+import { useAccount } from "@/components/account-context";
 
 type OrderDraft = Omit<Order, "id" | "createdAt" | "status">;
 
 type OrdersState = {
   orders: Order[];
   hydrated: boolean;
-  placeOrder: (draft: OrderDraft) => Order;
+  placeOrder: (draft: OrderDraft) => Promise<Order>;
   getOrder: (id: string) => Order | undefined;
-  cancelOrder: (id: string) => void;
-  markPaid: (id: string) => void;
+  cancelOrder: (id: string) => Promise<void>;
+  markPaid: (id: string) => Promise<void>;
+  refreshOrders: () => Promise<void>;
 };
 
 const OrdersContext = createContext<OrdersState | null>(null);
-const STORAGE_KEY = "bathhub-orders";
 
 export function OrdersProvider({ children }: { children: ReactNode }) {
+  const { user, hydrated: accountHydrated } = useAccount();
   const [orders, setOrders] = useState<Order[]>([]);
   const [hydrated, setHydrated] = useState(false);
 
-  useEffect(() => {
+  const refreshOrders = useCallback(async () => {
+    if (!user) { setOrders([]); setHydrated(true); return; }
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) setOrders(JSON.parse(raw));
-    } catch {
-      /* ignore */
-    }
+      const res = await fetch("/api/orders");
+      if (res.ok) setOrders(await res.json());
+    } catch { /* ignore */ }
     setHydrated(true);
-  }, []);
+  }, [user]);
 
   useEffect(() => {
-    if (hydrated) localStorage.setItem(STORAGE_KEY, JSON.stringify(orders));
-  }, [orders, hydrated]);
+    if (accountHydrated) refreshOrders();
+  }, [accountHydrated, refreshOrders]);
 
-  const placeOrder: OrdersState["placeOrder"] = (draft) => {
-    const order: Order = {
-      ...draft,
-      id: generateOrderId(),
-      createdAt: Date.now(),
-      status: "pending",
-    };
+  const placeOrder = async (draft: OrderDraft): Promise<Order> => {
+    const res = await fetch("/api/orders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(draft),
+    });
+    if (!res.ok) throw new Error("Захиалга үүсгэхэд алдаа гарлаа.");
+    const order: Order = await res.json();
     setOrders((prev) => [order, ...prev]);
     return order;
   };
 
-  const setStatus = (id: string, status: Order["status"]) =>
-    setOrders((prev) => prev.map((o) => (o.id === id ? { ...o, status } : o)));
+  const updateStatus = async (id: string, status: Order["status"]) => {
+    const res = await fetch(`/api/orders/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status }),
+    });
+    if (res.ok) {
+      const updated: Order = await res.json();
+      setOrders((prev) => prev.map((o) => (o.id === id ? updated : o)));
+    }
+  };
 
   return (
     <OrdersContext.Provider
@@ -62,8 +74,9 @@ export function OrdersProvider({ children }: { children: ReactNode }) {
         hydrated,
         placeOrder,
         getOrder: (id) => orders.find((o) => o.id === id),
-        cancelOrder: (id) => setStatus(id, "cancelled"),
-        markPaid: (id) => setStatus(id, "paid"),
+        cancelOrder: (id) => updateStatus(id, "cancelled"),
+        markPaid: (id) => updateStatus(id, "paid"),
+        refreshOrders,
       }}
     >
       {children}

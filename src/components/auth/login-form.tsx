@@ -21,15 +21,15 @@ export function LoginForm() {
     if (hydrated && user) router.replace(redirect);
   }, [hydrated, user, redirect, router]);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const res = signIn(email, password);
+    const res = await signIn(email, password);
     if (res.ok) router.push(redirect);
     else setError(res.error);
   };
 
-  const demoLogin = () => {
-    const res = signIn(demoUser.email, DEMO_PASSWORD);
+  const demoLogin = async () => {
+    const res = await signIn(demoUser.email, DEMO_PASSWORD);
     if (res.ok) router.push(redirect);
   };
 

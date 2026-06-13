@@ -4,6 +4,7 @@ import { Logo } from "./logo";
 
 // Minimal footer — account actions live in the header, not here.
 const legalLinks = [
+  { label: "Бидний тухай", href: "/about" },
   { label: "Үйлчилгээний нөхцөл", href: "/service" },
   { label: "Хүргэлтийн нөхцөл", href: "/delivery" },
   { label: "Холбоо барих", href: "/contact" },
@@ -13,12 +14,7 @@ export function Footer() {
   return (
     <footer className="mt-12 border-t border-border-subtle bg-muted/40">
       <div className="mx-auto flex max-w-[1280px] flex-col gap-4 px-4 py-6 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
-          <Logo />
-          <p className="text-sm text-muted-foreground">
-            Угаалгын өрөө, сантехникийн цахим дэлгүүр
-          </p>
-        </div>
+        <Logo />
 
         <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
           {legalLinks.map((l) => (

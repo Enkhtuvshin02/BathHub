@@ -1,11 +1,23 @@
 import { Hero } from "@/components/hero";
 import { CategoryShowcase } from "@/components/category-showcase";
 import { ProductSection } from "@/components/product-section";
-import { products } from "@/lib/data";
+import { db } from "@/lib/db";
 
-export default function Home() {
-  const newest = products.filter((p) => p.isNew);
-  const featured = products.filter((p) => p.isFeatured);
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const toProduct = (p: { id: string; name: string; price: number; oldPrice: number | null; image: string; categorySlug: string; rating: number; stock: number; isNew: boolean; isFeatured: boolean; unit: string | null }) => ({
+    ...p,
+    oldPrice: p.oldPrice ?? undefined,
+    unit: p.unit ?? undefined,
+  });
+
+  const [newestRaw, featuredRaw] = await Promise.all([
+    db.product.findMany({ where: { isNew: true }, take: 8 }),
+    db.product.findMany({ where: { isFeatured: true }, take: 8 }),
+  ]);
+  const newest = newestRaw.map(toProduct);
+  const featured = featuredRaw.map(toProduct);
 
   return (
     <>
@@ -14,13 +26,13 @@ export default function Home() {
       <ProductSection
         title="Шинэ бүтээгдэхүүн"
         subtitle="Шинээр нэмэгдсэн сантехникийн бүтээгдэхүүнүүд"
-        products={newest.length ? newest : products.slice(0, 5)}
+        products={newest}
         href="/product?filter=new"
       />
       <ProductSection
         title="Онцлох бүтээгдэхүүн"
         subtitle="Хамгийн их эрэлттэй угаалгын өрөөний бараанууд"
-        products={featured.length ? featured : products.slice(0, 5)}
+        products={featured}
         href="/product?filter=featured"
       />
     </>

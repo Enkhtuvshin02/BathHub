@@ -5,7 +5,6 @@ import "./globals.css";
 import { CartProvider } from "@/components/cart-context";
 import { AccountProvider } from "@/components/account-context";
 import { OrdersProvider } from "@/components/orders-context";
-import { TopBar } from "@/components/top-bar";
 import { Header } from "@/components/header";
 import { CategoryNav } from "@/components/category-nav";
 import { Footer } from "@/components/footer";
@@ -30,7 +29,6 @@ export default function RootLayout({
         <AccountProvider>
           <OrdersProvider>
             <CartProvider>
-              <TopBar />
               <Suspense fallback={<div className="h-[68px] border-b border-border-subtle" />}>
                 <Header />
               </Suspense>

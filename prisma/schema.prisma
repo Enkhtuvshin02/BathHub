@@ -1,0 +1,89 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id             String         @id @default(cuid())
+  email          String         @unique
+  password       String
+  firstName      String
+  lastName       String
+  phone          String?
+  createdAt      DateTime       @default(now())
+  orders         Order[]
+  savedAddresses SavedAddress[]
+}
+
+model SavedAddress {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  label     String
+  city      String
+  district  String
+  khoroo    String
+  detail    String
+  isDefault Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Category {
+  slug     String    @id
+  name     String
+  products Product[]
+}
+
+model Product {
+  id           String      @id
+  name         String
+  price        Float
+  oldPrice     Float?
+  image        String
+  categorySlug String
+  category     Category    @relation(fields: [categorySlug], references: [slug])
+  rating       Float       @default(0)
+  stock        Int         @default(0)
+  isNew        Boolean     @default(false)
+  isFeatured   Boolean     @default(false)
+  unit         String?
+  orderItems   OrderItem[]
+}
+
+model Order {
+  id            String      @id
+  userId        String
+  user          User        @relation(fields: [userId], references: [id])
+  createdAt     DateTime    @default(now())
+  items         OrderItem[]
+  addrLabel     String
+  addrCity      String
+  addrDistrict  String
+  addrKhoroo    String
+  addrDetail    String
+  custFirstName String
+  custLastName  String
+  custPhone     String
+  custEmail     String
+  receiptType   String      @default("personal")
+  subtotal      Float
+  discount      Float       @default(0)
+  delivery      Float
+  ecoBag        Float
+  total         Float
+  status        String      @default("pending")
+  paymentMethod String?
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  qty       Int
+  price     Float
+}

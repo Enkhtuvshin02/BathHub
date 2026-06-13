@@ -2,76 +2,114 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { FileText, MapPin, User } from "lucide-react";
+import { Check, FileText, MapPin, Pencil, Plus, User } from "lucide-react";
 import { useCart } from "@/components/cart-context";
 import { useAccount } from "@/components/account-context";
 import { useOrders } from "@/components/orders-context";
 import { CheckoutSteps } from "@/components/checkout/checkout-steps";
 import { OrderSummary } from "@/components/checkout/order-summary";
 import { PaymentMethodsModal } from "@/components/checkout/payment-methods-modal";
-import { QrPaymentModal } from "@/components/checkout/qr-payment-modal";
+import { BankTransferModal } from "@/components/checkout/bank-transfer-modal";
+import { AddressFields } from "@/components/address-fields";
 import { formatPrice } from "@/lib/data";
-import { computeTotals, type Address, type Customer, type Order } from "@/lib/checkout";
+import { computeTotals, type Address, type Customer } from "@/lib/checkout";
 
 const field = "h-11 w-full rounded-lg border border-border-subtle px-3 text-sm outline-none focus:border-brand";
-const label = "mb-1 block text-sm font-medium";
+const lbl = "mb-1 block text-sm font-medium";
 const req = <span className="text-sale">*</span>;
+
+// field/lbl/req still used for the customer info section below
+
+type SavedAddr = { id: string; label: string; city: string; district: string; khoroo: string; detail: string; isDefault: boolean };
+
+const BLANK_ADDR: Address = { label: "", city: "", district: "", khoroo: "", detail: "", otherRecipient: false };
 
 export default function CheckoutPage() {
   const router = useRouter();
   const { lines, total, clear } = useCart();
   const { user } = useAccount();
-  const { placeOrder, markPaid } = useOrders();
+  const { placeOrder } = useOrders();
 
   const [step, setStep] = useState<"address" | "review">("address");
   const [showMethods, setShowMethods] = useState(false);
-  const [order, setOrder] = useState<Order | null>(null);
+  const [showBankTransfer, setShowBankTransfer] = useState(false);
+  const [placing, setPlacing] = useState(false);
 
-  const [address, setAddress] = useState<Address>({
-    label: "", city: "", district: "", khoroo: "", detail: "", otherRecipient: false,
-  });
+  const [savedAddrs, setSavedAddrs] = useState<SavedAddr[]>([]);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [showNewForm, setShowNewForm] = useState(false);
+
+  const [address, setAddress] = useState<Address>(BLANK_ADDR);
   const [customer, setCustomer] = useState<Customer>({
     firstName: "", lastName: "", phone: "", email: "", receiptType: "personal",
   });
 
-  // Prefill customer from the signed-in demo user.
   useEffect(() => {
-    if (user) setCustomer((c) => ({ ...c, firstName: user.firstName, lastName: user.lastName, phone: user.phone, email: user.email }));
+    if (user) setCustomer((c) => ({ ...c, firstName: user.firstName, lastName: user.lastName, phone: user.phone ?? "", email: user.email }));
   }, [user]);
 
-  // Guard: empty cart (and not mid-payment) → back to cart.
+  useEffect(() => {
+    if (!user) return;
+    fetch("/api/addresses").then((r) => r.json()).then((data: SavedAddr[]) => {
+      setSavedAddrs(data);
+      const def = data.find((a) => a.isDefault) ?? data[0];
+      if (def) {
+        setSelectedId(def.id);
+        setAddress({ label: def.label, city: def.city, district: def.district, khoroo: def.khoroo, detail: def.detail, otherRecipient: false });
+        setShowNewForm(false);
+      } else {
+        setShowNewForm(true);
+      }
+    }).catch(() => setShowNewForm(true));
+  }, [user]);
+
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   useEffect(() => {
-    if (mounted && lines.length === 0 && !order) router.replace("/cart");
-  }, [mounted, lines.length, order, router]);
+    if (mounted && lines.length === 0) router.replace("/cart");
+  }, [mounted, lines.length, router]);
+
+  const selectSaved = (a: SavedAddr) => {
+    setSelectedId(a.id);
+    setAddress({ label: a.label, city: a.city, district: a.district, khoroo: a.khoroo, detail: a.detail, otherRecipient: false });
+    setShowNewForm(false);
+  };
+
+  const openNewForm = () => {
+    setSelectedId(null);
+    setAddress(BLANK_ADDR);
+    setShowNewForm(true);
+  };
 
   const addressValid =
     address.city.trim() && address.detail.trim() && customer.firstName.trim() && customer.phone.trim();
 
   const { delivery, ecoBag, total: grandTotal } = computeTotals(total);
 
-  // Place the order (snapshot of the cart) and open the QR modal. The cart is
-  // cleared only when leaving for the order page, so amounts stay correct here.
-  const startPayment = () => {
-    const placed = placeOrder({
-      items: lines,
-      address,
-      customer,
-      subtotal: total,
-      discount: 0,
-      delivery,
-      ecoBag,
-      total: grandTotal,
-      paymentMethod: "qr",
-    });
-    setOrder(placed);
+  const openBankTransfer = () => {
     setShowMethods(false);
+    setShowBankTransfer(true);
   };
 
-  const finishToOrder = (id: string) => {
-    clear();
-    router.push(`/orders/${id}`);
+  const confirmOrder = async () => {
+    if (placing) return;
+    setPlacing(true);
+    try {
+      if (user && showNewForm) {
+        await fetch("/api/addresses", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ ...address, isDefault: savedAddrs.length === 0 }),
+        });
+      }
+      const placed = await placeOrder({
+        items: lines, address, customer, subtotal: total, discount: 0, delivery, ecoBag, total: grandTotal, paymentMethod: "bank",
+      });
+      clear();
+      router.push(`/orders/${placed.id}`);
+    } catch {
+      setPlacing(false);
+    }
   };
 
   const set = <T,>(setter: React.Dispatch<React.SetStateAction<T>>, key: keyof T) =>
@@ -90,37 +128,63 @@ export default function CheckoutPage() {
                 <h2 className="mb-4 flex items-center gap-2 text-lg font-bold">
                   <MapPin className="size-5 text-brand" /> Хүргэлтийн хаяг
                 </h2>
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div>
-                    <span className={label}>Хаягийн нэр {req}</span>
-                    <input className={field} placeholder="Гэр, Ажил" value={address.label} onChange={set(setAddress, "label")} />
+
+                {/* Saved addresses */}
+                {savedAddrs.length > 0 && (
+                  <div className="mb-4 space-y-2">
+                    {savedAddrs.map((a) => (
+                      <button
+                        key={a.id}
+                        onClick={() => selectSaved(a)}
+                        className={`flex w-full items-start gap-3 rounded-xl border px-4 py-3 text-left transition-colors ${
+                          selectedId === a.id && !showNewForm
+                            ? "border-brand bg-brand/5"
+                            : "border-border-subtle hover:border-brand/50 hover:bg-muted/40"
+                        }`}
+                      >
+                        <span className={`mt-0.5 grid size-4 shrink-0 place-items-center rounded-full border-2 ${
+                          selectedId === a.id && !showNewForm ? "border-brand bg-brand" : "border-border-subtle"
+                        }`}>
+                          {selectedId === a.id && !showNewForm && <Check className="size-2.5 text-white" />}
+                        </span>
+                        <span className="flex-1 text-sm">
+                          <span className="font-semibold">{a.label || "Хаяг"}</span>
+                          {a.isDefault && <span className="ml-2 rounded-full bg-brand/10 px-2 py-0.5 text-xs text-brand">Үндсэн</span>}
+                          <span className="mt-0.5 block text-muted-foreground">
+                            {[a.city, a.district, a.khoroo].filter(Boolean).join(", ")}
+                          </span>
+                          <span className="block text-muted-foreground">{a.detail}</span>
+                        </span>
+                      </button>
+                    ))}
+                    <button
+                      onClick={openNewForm}
+                      className={`flex w-full items-center gap-2 rounded-xl border px-4 py-3 text-sm transition-colors ${
+                        showNewForm ? "border-brand bg-brand/5 text-brand" : "border-dashed border-border-subtle hover:border-brand/50 text-muted-foreground hover:text-foreground"
+                      }`}
+                    >
+                      <Plus className="size-4" /> Шинэ хаяг нэмэх
+                    </button>
                   </div>
-                  <div>
-                    <span className={label}>Хот / Аймаг {req}</span>
-                    <input className={field} placeholder="Хот/Аймаг сонгох" value={address.city} onChange={set(setAddress, "city")} />
-                  </div>
-                  <div>
-                    <span className={label}>Дүүрэг {req}</span>
-                    <input className={field} value={address.district} onChange={set(setAddress, "district")} />
-                  </div>
-                  <div>
-                    <span className={label}>Хороо {req}</span>
-                    <input className={field} value={address.khoroo} onChange={set(setAddress, "khoroo")} />
-                  </div>
-                </div>
-                <label className="mt-3 flex w-fit items-center gap-2 text-sm">
-                  <input type="checkbox" checked={address.otherRecipient} onChange={(e) => setAddress((a) => ({ ...a, otherRecipient: e.target.checked }))} className="size-4 accent-[var(--brand)]" />
-                  Өөр хүн хүлээн авна
-                </label>
-                <div className="mt-4">
-                  <span className={label}>Дэлгэрэнгүй хаяг {req}</span>
-                  <textarea
-                    className="min-h-24 w-full rounded-lg border border-border-subtle p-3 text-sm outline-none focus:border-brand"
-                    placeholder="Та хаягаа зөв дэлгэрэнгүй оруулна уу. Тодорхой бус хаягаас үүдэн хүргэлт удааширч болзошгүй."
-                    value={address.detail}
-                    onChange={set(setAddress, "detail")}
-                  />
-                </div>
+                )}
+
+                {/* New / edit form */}
+                {(showNewForm || savedAddrs.length === 0) && (
+                  <AddressFields value={address} onChange={setAddress} />
+                )}
+
+                {/* Inline edit of selected saved address */}
+                {!showNewForm && selectedId && (
+                  <button
+                    onClick={() => {
+                      setShowNewForm(true);
+                      setSelectedId(null);
+                    }}
+                    className="mt-3 flex items-center gap-1.5 text-xs text-brand hover:underline"
+                  >
+                    <Pencil className="size-3.5" /> Хаяг засварлах
+                  </button>
+                )}
               </section>
 
               <section className="rounded-card border border-border-subtle p-5">
@@ -129,19 +193,19 @@ export default function CheckoutPage() {
                 </h2>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
-                    <span className={label}>Нэр {req}</span>
+                    <span className={lbl}>Нэр {req}</span>
                     <input className={field} value={customer.firstName} onChange={set(setCustomer, "firstName")} />
                   </div>
                   <div>
-                    <span className={label}>Овог</span>
+                    <span className={lbl}>Овог</span>
                     <input className={field} value={customer.lastName} onChange={set(setCustomer, "lastName")} />
                   </div>
                   <div>
-                    <span className={label}>Утасны дугаар {req}</span>
+                    <span className={lbl}>Утасны дугаар {req}</span>
                     <input className={field} value={customer.phone} onChange={set(setCustomer, "phone")} />
                   </div>
                   <div>
-                    <span className={label}>И-Мэйл хаяг</span>
+                    <span className={lbl}>И-Мэйл хаяг</span>
                     <input className={field} value={customer.email} onChange={set(setCustomer, "email")} />
                   </div>
                 </div>
@@ -220,14 +284,14 @@ export default function CheckoutPage() {
       </div>
 
       {showMethods && (
-        <PaymentMethodsModal onSelectQr={startPayment} onClose={() => setShowMethods(false)} />
+        <PaymentMethodsModal onSelectBank={openBankTransfer} onClose={() => setShowMethods(false)} />
       )}
-      {order && (
-        <QrPaymentModal
-          amount={order.total}
-          orderId={order.id}
-          onConfirm={() => { markPaid(order.id); finishToOrder(order.id); }}
-          onClose={() => finishToOrder(order.id)}
+      {showBankTransfer && (
+        <BankTransferModal
+          amount={grandTotal}
+          onConfirm={confirmOrder}
+          onClose={() => setShowBankTransfer(false)}
+          placing={placing}
         />
       )}
     </div>
