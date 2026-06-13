@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { Heart, Minus, Plus, ShoppingCart, Star } from "lucide-react";
+import { Heart, Minus, Plus, ShoppingCart } from "lucide-react";
 import type { Product } from "@/lib/types";
 import { categoryName, formatPrice } from "@/lib/data";
 import { useCart } from "./cart-context";
@@ -42,10 +42,6 @@ export function ProductDetail({ product }: { product: Product }) {
             <button aria-label="Хадгалах" className="grid size-10 shrink-0 place-items-center rounded-full border border-border-subtle hover:bg-muted">
               <Heart className="size-5" />
             </button>
-          </div>
-
-          <div className="mt-2 flex items-center gap-1 text-sm text-muted-foreground">
-            <Star className="size-4 fill-rating text-rating" /> {product.rating}
           </div>
 
           <div className="mt-4 flex items-end gap-3">
@@ -108,14 +104,6 @@ export function ProductDetail({ product }: { product: Product }) {
             </dl>
           </div>
 
-          {/* payment */}
-          <div className="mt-6 rounded-card border border-border-subtle p-4">
-            <h4 className="mb-2 text-sm font-semibold">Төлбөрийн боломжууд</h4>
-            <div className="flex items-center gap-2">
-              <span className="grid size-8 place-items-center rounded-md bg-[#00c758] text-sm font-bold text-white">Q</span>
-              <span className="text-sm">QPay-ээр төлөх боломжтой</span>
-            </div>
-          </div>
         </div>
       </div>
     </div>

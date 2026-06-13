@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ShoppingCart, Star } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import type { Product } from "@/lib/types";
 import { formatPrice } from "@/lib/data";
 import { useCart } from "./cart-context";
@@ -42,11 +42,6 @@ export function ProductCard({ product }: { product: Product }) {
         >
           {product.name}
         </Link>
-
-        <div className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
-          <Star className="size-3.5 fill-rating text-rating" />
-          <span>{product.rating}</span>
-        </div>
 
         <div className="mt-2 flex items-end justify-between">
           <div>

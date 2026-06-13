@@ -6,14 +6,6 @@ import type { CartLine } from "@/components/cart-context";
 import { formatPrice } from "@/lib/data";
 import { computeTotals } from "@/lib/checkout";
 
-type Promo = {
-  value: string;
-  onChange: (v: string) => void;
-  onApply: () => void;
-  applied: boolean;
-  error?: string;
-};
-
 type Cta = { label: string; href?: string; onClick?: () => void; disabled?: boolean };
 
 export function OrderSummary({
@@ -21,7 +13,6 @@ export function OrderSummary({
   subtotal,
   discount = 0,
   showFees = false,
-  promo,
   cta,
   secondary,
 }: {
@@ -29,7 +20,6 @@ export function OrderSummary({
   subtotal: number;
   discount?: number;
   showFees?: boolean;
-  promo?: Promo;
   cta?: Cta;
   secondary?: { label: string; href?: string; onClick?: () => void };
 }) {
@@ -84,27 +74,6 @@ export function OrderSummary({
         <span className="font-semibold">Нийт төлөх дүн</span>
         <span className="text-xl font-bold">{formatPrice(grandTotal)}</span>
       </div>
-
-      {promo && (
-        <div className="mt-4">
-          <div className="flex gap-2">
-            <input
-              value={promo.value}
-              onChange={(e) => promo.onChange(e.target.value)}
-              placeholder="Хөнгөлөлтийн кодоо оруулна уу"
-              className="h-10 flex-1 rounded-lg border border-border-subtle px-3 text-sm outline-none focus:border-brand"
-            />
-            <button
-              onClick={promo.onApply}
-              className="rounded-lg bg-brand px-4 text-sm font-medium text-brand-foreground hover:bg-brand-hover"
-            >
-              Оруулах
-            </button>
-          </div>
-          {promo.applied && <p className="mt-1.5 text-xs text-success">Хөнгөлөлт амжилттай нэмэгдлээ.</p>}
-          {promo.error && <p className="mt-1.5 text-xs text-sale">{promo.error}</p>}
-        </div>
-      )}
 
       {cta &&
         (cta.href ? (

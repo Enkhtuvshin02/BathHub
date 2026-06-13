@@ -8,9 +8,6 @@ export const BANK_ACCOUNTS = [
 export const DELIVERY_FEE = 6600; // Дотоодын хүргэлт
 export const ECO_BAG_FEE = 380; // Хүргэлтийн эко уут
 
-// Single demo promo code: 10% off the product subtotal.
-export const PROMO_CODE = "BATH10";
-export const PROMO_RATE = 0.1;
 
 export type Address = {
   label: string; // Хаягийн нэр (Гэр / Ажил)

@@ -2,31 +2,14 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+
 import { Heart, Minus, Package, Plus, ShoppingCart, Trash2, X } from "lucide-react";
 import { useCart } from "@/components/cart-context";
 import { CheckoutSteps } from "@/components/checkout/checkout-steps";
 import { OrderSummary } from "@/components/checkout/order-summary";
 import { formatPrice } from "@/lib/data";
-import { PROMO_CODE, PROMO_RATE } from "@/lib/checkout";
-
 export default function CartPage() {
   const { lines, setQty, remove, clear, total } = useCart();
-  const [promo, setPromo] = useState("");
-  const [applied, setApplied] = useState(false);
-  const [promoError, setPromoError] = useState<string>();
-
-  const discount = useMemo(() => (applied ? Math.round(total * PROMO_RATE) : 0), [applied, total]);
-
-  const applyPromo = () => {
-    if (promo.trim().toUpperCase() === PROMO_CODE) {
-      setApplied(true);
-      setPromoError(undefined);
-    } else {
-      setApplied(false);
-      setPromoError("Хөнгөлөлтийн код буруу байна.");
-    }
-  };
 
   if (lines.length === 0) {
     return (
@@ -121,14 +104,6 @@ export default function CartPage() {
           <div className="lg:sticky lg:top-4">
             <OrderSummary
               subtotal={total}
-              discount={discount}
-              promo={{
-                value: promo,
-                onChange: setPromo,
-                onApply: applyPromo,
-                applied,
-                error: promoError,
-              }}
               cta={{ label: "Үргэлжлүүлэх", href: "/checkout" }}
             />
           </div>

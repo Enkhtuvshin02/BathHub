@@ -1,4 +1,3 @@
-import { CategoryShowcase } from "@/components/category-showcase";
 import { ProductSection } from "@/components/product-section";
 import { db } from "@/lib/db";
 
@@ -20,7 +19,6 @@ export default async function Home() {
 
   return (
     <>
-      <CategoryShowcase />
       <ProductSection
         title="Шинэ бүтээгдэхүүн"
         subtitle="Шинээр нэмэгдсэн сантехникийн бүтээгдэхүүнүүд"

@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { SearchSelect } from "./search-select";
-import { CITIES, getDistricts, getKhoroos } from "@/lib/mn-address";
+import { getDistricts, getKhoroos } from "@/lib/mn-address";
 import type { Address } from "@/lib/checkout";
 
 const field = "h-11 w-full rounded-lg border border-border-subtle px-3 text-sm outline-none focus:border-brand bg-background";
@@ -23,14 +23,14 @@ export function AddressFields({
   const set = <K extends keyof Address>(key: K, val: Address[K]) =>
     onChange({ ...value, [key]: val });
 
-  const districts = value.city ? getDistricts(value.city) : [];
+  const districts = getDistricts();
   const khoroos = value.district ? getKhoroos(value.district) : [];
 
-  // Reset district/khoroo when city changes
+  // Auto-set city to Улаанбаатар
   useEffect(() => {
-    if (value.city) onChange({ ...value, district: "", khoroo: "" });
+    if (value.city !== "Улаанбаатар") onChange({ ...value, city: "Улаанбаатар", district: "", khoroo: "" });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value.city]);
+  }, []);
 
   // Reset khoroo when district changes
   useEffect(() => {
@@ -46,26 +46,16 @@ export function AddressFields({
           <input className={field} placeholder="Гэр, Ажил" value={value.label} onChange={(e) => set("label", e.target.value)} />
         </div>
         <div>
-          <span className={lblClass}>Хот / Аймаг {req}</span>
-          <SearchSelect
-            value={value.city}
-            onChange={(v) => set("city", v)}
-            options={CITIES}
-            placeholder="Хот / Аймаг сонгох"
-          />
-        </div>
-        <div>
-          <span className={lblClass}>Дүүрэг / Сум {req}</span>
+          <span className={lblClass}>Дүүрэг {req}</span>
           <SearchSelect
             value={value.district}
             onChange={(v) => set("district", v)}
             options={districts}
-            placeholder={value.city ? "Дүүрэг сонгох" : "Эхлээд хот сонгоно уу"}
-            disabled={!value.city}
+            placeholder="Дүүрэг сонгох"
           />
         </div>
         <div>
-          <span className={lblClass}>Хороо / Баг</span>
+          <span className={lblClass}>Хороо</span>
           <SearchSelect
             value={value.khoroo}
             onChange={(v) => set("khoroo", v)}
@@ -95,7 +85,6 @@ export function AddressFields({
           onChange={(e) => set("detail", e.target.value)}
         />
       </div>
-
     </div>
   );
 }
