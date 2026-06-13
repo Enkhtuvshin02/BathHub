@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useAccount, demoUser, DEMO_PASSWORD } from "@/components/account-context";
+import { useAccount } from "@/components/account-context";
 import { AuthCard, Field } from "./auth-card";
 
 export function LoginForm() {
@@ -16,7 +16,6 @@ export function LoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string>();
 
-  // Already signed in → leave the auth page.
   useEffect(() => {
     if (hydrated && user) router.replace(redirect);
   }, [hydrated, user, redirect, router]);
@@ -26,11 +25,6 @@ export function LoginForm() {
     const res = await signIn(email, password);
     if (res.ok) router.push(redirect);
     else setError(res.error);
-  };
-
-  const demoLogin = async () => {
-    const res = await signIn(demoUser.email, DEMO_PASSWORD);
-    if (res.ok) router.push(redirect);
   };
 
   const regHref = redirect !== "/" ? `/register?redirect=${encodeURIComponent(redirect)}` : "/register";
@@ -77,18 +71,6 @@ export function LoginForm() {
           Нэвтрэх
         </button>
       </form>
-
-      <div className="mt-4 rounded-lg bg-muted/60 p-3 text-xs text-muted-foreground">
-        <p className="mb-1.5 font-medium text-foreground">Туршилтын бүртгэл</p>
-        <p>И-мэйл: {demoUser.email}</p>
-        <p>Нууц үг: {DEMO_PASSWORD}</p>
-        <button
-          onClick={demoLogin}
-          className="mt-2 rounded-md border border-border-subtle bg-background px-3 py-1.5 font-medium text-foreground hover:bg-muted"
-        >
-          Туршилтаар нэвтрэх
-        </button>
-      </div>
     </AuthCard>
   );
 }

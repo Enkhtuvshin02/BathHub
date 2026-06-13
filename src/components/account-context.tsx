@@ -88,12 +88,3 @@ export function useAccount() {
   if (!ctx) throw new Error("useAccount must be used within AccountProvider");
   return ctx;
 }
-
-// Kept for backward compat with login-form demo button
-export const demoUser = {
-  email: "tuvshin674@gmail.com",
-  firstName: "Энхтүвшин",
-  lastName: "Энхтайван",
-  phone: "86155401",
-};
-export const DEMO_PASSWORD = "demo1234";
