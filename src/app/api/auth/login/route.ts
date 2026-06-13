@@ -22,6 +22,7 @@ export async function POST(req: NextRequest) {
     firstName: user.firstName,
     lastName: user.lastName,
     phone: user.phone,
+    isAdmin: user.isAdmin,
   });
 
   return NextResponse.json({

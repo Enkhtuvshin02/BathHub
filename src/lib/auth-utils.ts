@@ -14,6 +14,7 @@ export type SessionPayload = {
   firstName: string;
   lastName: string;
   phone: string | null;
+  isAdmin: boolean;
 };
 
 export async function signToken(payload: SessionPayload): Promise<string> {
@@ -59,4 +60,10 @@ export async function getSession(): Promise<SessionPayload | null> {
   const token = jar.get(COOKIE_NAME)?.value;
   if (!token) return null;
   return verifyToken(token);
+}
+
+export async function getAdminSession(): Promise<SessionPayload | null> {
+  const session = await getSession();
+  if (!session?.isAdmin) return null;
+  return session;
 }

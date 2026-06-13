@@ -5,7 +5,9 @@ const PROTECTED = ["/orders", "/profile", "/checkout"];
 
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const isProtected = PROTECTED.some((p) => pathname.startsWith(p));
+
+  const isAdmin = pathname.startsWith("/admin");
+  const isProtected = isAdmin || PROTECTED.some((p) => pathname.startsWith(p));
   if (!isProtected) return NextResponse.next();
 
   const token = req.cookies.get("bathhub-token")?.value;
@@ -24,9 +26,15 @@ export async function proxy(req: NextRequest) {
     return NextResponse.redirect(url);
   }
 
+  if (isAdmin && !session.isAdmin) {
+    const url = req.nextUrl.clone();
+    url.pathname = "/";
+    return NextResponse.redirect(url);
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/orders/:path*", "/profile/:path*", "/checkout/:path*"],
+  matcher: ["/orders/:path*", "/profile/:path*", "/checkout/:path*", "/admin/:path*"],
 };

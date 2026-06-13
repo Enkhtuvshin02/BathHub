@@ -50,13 +50,14 @@ async function main() {
   const hash = await bcrypt.hash("demo1234", 10);
   await db.user.upsert({
     where: { email: "tuvshin674@gmail.com" },
-    update: {},
+    update: { isAdmin: true },
     create: {
       email: "tuvshin674@gmail.com",
       password: hash,
       firstName: "Энхтүвшин",
       lastName: "Энхтайван",
       phone: "86155401",
+      isAdmin: true,
     },
   });
 

@@ -10,5 +10,6 @@ export async function GET() {
     firstName: session.firstName,
     lastName: session.lastName,
     phone: session.phone,
+    isAdmin: session.isAdmin,
   });
 }
