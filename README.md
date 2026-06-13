@@ -1,8 +1,8 @@
-# BathMall.mn — Bathroom & Sanitaryware E-commerce (demo)
+# BathHub — Bathroom & Sanitaryware E-commerce (demo)
 
 A functional storefront for an online bathroom/sanitaryware shop (toilets, sinks, bidets,
 faucets, showers, bathtubs, etc.) for the Mongolian market. It started as a pixel-faithful
-clone of [100ail.mn](https://100ail.mn) and was re-skinned into **BathMall.mn**, then
+clone of [100ail.mn](https://100ail.mn) and was re-skinned into **BathHub**, then
 extended with a full cart → checkout → payment flow and authentication.
 
 > ⚠️ **Demo / prototype.** There is no backend. Catalog data is mocked, product images are
