@@ -1,66 +1,117 @@
-"use client";
-
 import Link from "next/link";
-import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, CreditCard, Phone, ShieldCheck, Truck } from "lucide-react";
+import { categories, products } from "@/lib/data";
 
-const slides = [
-  {
-    title: "ТАНЫ УГААЛГЫН\nӨРӨӨГ ШИНЭЧИЛЬЕ",
-    subtitle: "Суултуур, угаалтуур, биде, шүршүүр — чанартай сантехник, шуурхай хүргэлт",
-    cta: "Дэлгүүр хэсэх",
-    bg: "from-[#0a4d7a] via-[#0e7fd1] to-[#3aa0e0]",
-  },
-  {
-    title: "ОРЧИН ҮЕИЙН\nСАНТЕХНИК",
-    subtitle: "Дэлхийн шилдэг брэндүүдийн бүтээгдэхүүн боломжийн үнээр",
-    cta: "Шинэ бараа",
-    bg: "from-[#0b6e6e] via-[#0fa3a3] to-[#3fc6c6]",
-  },
+const QUICK_CATS = ["unitaz", "ugaaltuur", "shurshuur", "bide"];
+
+const VALUE_PROPS = [
+  { icon: Truck,       title: "Шуурхай хүргэлт",    sub: "Улаанбаатарт 24–48 цаг" },
+  { icon: ShieldCheck, title: "Оригинал бараа",      sub: "100% баталгаат чанар"   },
+  { icon: CreditCard,  title: "Хялбар төлбөр",      sub: "Банкны шилжүүлэг"       },
+  { icon: Phone,       title: "Лавлах утас",         sub: "77100100 — өдөр бүр"    },
 ];
 
 export function Hero() {
-  const [i, setI] = useState(0);
-  const slide = slides[i];
-  const go = (d: number) => setI((p) => (p + d + slides.length) % slides.length);
+  const catTiles = QUICK_CATS
+    .map((slug) => {
+      const cat   = categories.find((c) => c.slug === slug);
+      const image = products.find((p) => p.categorySlug === slug)?.image;
+      return cat && image ? { ...cat, image } : null;
+    })
+    .filter((t): t is { slug: string; name: string; image: string } => t !== null);
 
   return (
-    <section className="mx-auto max-w-[1280px] px-4 pt-4">
-      <div className={`relative overflow-hidden rounded-card bg-gradient-to-r ${slide.bg}`}>
-        <div className="relative z-10 flex min-h-[220px] flex-col justify-center gap-4 px-8 py-10 sm:min-h-[300px] sm:px-14">
-          <h2 className="whitespace-pre-line font-serif text-3xl font-bold leading-tight text-white sm:text-5xl" style={{ fontFamily: "Georgia, serif" }}>
-            {slide.title}
-          </h2>
-          <p className="max-w-md text-sm text-white/85 sm:text-base">{slide.subtitle}</p>
-          <Link
-            href="/product"
-            className="w-fit rounded-lg bg-brand px-6 py-2.5 text-sm font-semibold text-brand-foreground transition-colors hover:bg-brand-hover"
-          >
-            {slide.cta}
-          </Link>
+    <div className="mx-auto max-w-[1280px] space-y-3 px-4 pt-4">
+
+      {/* ── Main hero ─────────────────────────────────────────── */}
+      <div className="flex min-h-[300px] flex-col overflow-hidden rounded-2xl bg-[#0f1623] sm:flex-row sm:min-h-[340px]">
+
+        {/* Left — headline + CTAs */}
+        <div className="flex flex-col justify-center gap-5 px-8 py-10 sm:w-[54%] sm:px-12">
+
+          {/* Live badge */}
+          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/8 px-3 py-1 text-xs text-white/60">
+            <span className="size-1.5 animate-pulse rounded-full bg-emerald-400" />
+            Улаанбаатарт 24–48 цагт хүргэнэ
+          </div>
+
+          {/* Headline */}
+          <div>
+            <h1 className="text-[clamp(1.75rem,4vw,3rem)] font-bold leading-[1.15] tracking-tight text-white">
+              Угаалгын өрөөгөо<br />
+              <span className="text-[#4db8ff]">шинэчлэх</span> цаг боллоо
+            </h1>
+            <p className="mt-3 max-w-sm text-sm leading-relaxed text-white/50 sm:text-[0.9375rem]">
+              Суултуур, угаалтуур, шүршүүр, биде —<br className="hidden sm:block" />
+              дэлхийн шилдэг брэндүүд боломжийн үнээр.
+            </p>
+          </div>
+
+          {/* CTAs */}
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/product"
+              className="flex items-center gap-2 rounded-xl bg-brand px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-hover"
+            >
+              Бараа үзэх <ArrowRight className="size-4" />
+            </Link>
+            <Link
+              href="/product?filter=sale"
+              className="flex items-center gap-2 rounded-xl border border-white/15 bg-white/8 px-6 py-2.5 text-sm font-semibold text-white/80 transition-colors hover:bg-white/15"
+            >
+              Хямдралтай бараа
+            </Link>
+          </div>
         </div>
 
-        {/* decorative pattern */}
-        <div className="pointer-events-none absolute inset-0 opacity-20 [background:radial-gradient(circle_at_80%_20%,white,transparent_45%)]" />
-
-        <button onClick={() => go(-1)} aria-label="Өмнөх" className="absolute left-3 top-1/2 z-20 grid size-9 -translate-y-1/2 place-items-center rounded-full bg-white/25 text-white backdrop-blur hover:bg-white/40">
-          <ChevronLeft className="size-5" />
-        </button>
-        <button onClick={() => go(1)} aria-label="Дараах" className="absolute right-3 top-1/2 z-20 grid size-9 -translate-y-1/2 place-items-center rounded-full bg-white/25 text-white backdrop-blur hover:bg-white/40">
-          <ChevronRight className="size-5" />
-        </button>
-
-        <div className="absolute bottom-3 left-1/2 z-20 flex -translate-x-1/2 gap-1.5">
-          {slides.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setI(idx)}
-              aria-label={`Слайд ${idx + 1}`}
-              className={`h-1.5 rounded-full transition-all ${idx === i ? "w-5 bg-white" : "w-1.5 bg-white/50"}`}
-            />
+        {/* Right — 2×2 category image grid */}
+        <div className="grid grid-cols-2 gap-2 p-3 sm:w-[46%] sm:p-4">
+          {catTiles.map((cat) => (
+            <Link
+              key={cat.slug}
+              href={`/product?category=${cat.slug}`}
+              className="group relative overflow-hidden rounded-xl"
+            >
+              <div className="relative aspect-[4/3]">
+                <Image
+                  src={cat.image}
+                  alt={cat.name}
+                  fill
+                  sizes="(max-width:640px) 50vw, 23vw"
+                  className="object-cover brightness-75 transition-all duration-500 group-hover:brightness-90 group-hover:scale-105"
+                />
+                {/* gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                {/* label */}
+                <div className="absolute bottom-0 left-0 right-0 flex items-end justify-between p-2.5 sm:p-3">
+                  <span className="text-xs font-semibold text-white drop-shadow sm:text-sm">{cat.name}</span>
+                  <ArrowRight className="size-3.5 text-white/60 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-white" />
+                </div>
+              </div>
+            </Link>
           ))}
         </div>
       </div>
-    </section>
+
+      {/* ── Value-props strip ──────────────────────────────────── */}
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+        {VALUE_PROPS.map(({ icon: Icon, title, sub }) => (
+          <div
+            key={title}
+            className="flex items-center gap-3 rounded-xl border border-border-subtle bg-background px-4 py-3"
+          >
+            <div className="grid size-9 shrink-0 place-items-center rounded-lg bg-brand/10 text-brand">
+              <Icon className="size-4" />
+            </div>
+            <div className="min-w-0">
+              <p className="truncate text-sm font-semibold">{title}</p>
+              <p className="truncate text-xs text-muted-foreground">{sub}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </div>
   );
 }
