@@ -4,9 +4,7 @@ import { Logo } from "./logo";
 
 // Minimal footer — account actions live in the header, not here.
 const legalLinks = [
-  { label: "Бидний тухай", href: "/about" },
   { label: "Үйлчилгээний нөхцөл", href: "/service" },
-  { label: "Хүргэлтийн нөхцөл", href: "/delivery" },
 ];
 
 export function Footer() {
